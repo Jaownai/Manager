@@ -60,8 +60,6 @@ function Library:Create(config)
     local ImageButton_2 = Instance.new("ImageButton")
     local Power = Instance.new("Frame")
     local ImageButton_3 = Instance.new("ImageButton")
-    local ToggleButton = Instance.new("TextButton")
-    local ToggleUICorner = Instance.new("UICorner")
     
     -- Properties
     ManagerPlus.Name = config.Name or "ManagerPlus+"
@@ -471,27 +469,6 @@ function Library:Create(config)
     UIPadding_Power.PaddingTop = UDim.new(0, 10)
     UIPadding_Power.PaddingBottom = UDim.new(0, 2)
     
-    ToggleButton.Name = "ToggleButton"
-    ToggleButton.Parent = ManagerPlus
-    ToggleButton.AnchorPoint = Vector2.new(0, 0)
-    ToggleButton.BackgroundColor3 = Color3.fromRGB(60, 120, 200)
-    ToggleButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    ToggleButton.BorderSizePixel = 0
-    ToggleButton.Position = UDim2.new(0, 10, 0, 10)
-    ToggleButton.Size = UDim2.new(0, 180, 0, 40)
-    ToggleButton.Font = Enum.Font.GothamBold
-    ToggleButton.Text = "Toggle Manager"
-    ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleButton.TextSize = 14
-    
-    ToggleUICorner.CornerRadius = UDim.new(0, 8)
-    ToggleUICorner.Parent = ToggleButton
-    
-    local ToggleStroke = Instance.new("UIStroke")
-    ToggleStroke.Parent = ToggleButton
-    ToggleStroke.Color = Color3.fromRGB(45, 45, 45)
-    ToggleStroke.Thickness = 1.5
-    
     -- Variables
     local dragging = false
     local dragInput
@@ -499,6 +476,8 @@ function Library:Create(config)
     local startPos
     local currentTab = "Entity"
     local isMenuOpen = false
+    
+    -- ===== ลบ Toggle Button ออกแล้ว =====
     
     local function updateMenuPosition()
         local mainPos = main.AbsolutePosition
@@ -717,58 +696,6 @@ function Library:Create(config)
     
     TweenService:Create(ImageButton_2, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(100, 200, 255)}):Play()
     
-    local isUIVisible = true
-    ToggleButton.MouseButton1Click:Connect(function()
-        isUIVisible = not isUIVisible
-        local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
-        if isUIVisible then
-            main.Visible = true
-            if isMenuOpen then
-                OpenMenu.Visible = true
-            end
-            local showTween = TweenService:Create(main, tweenInfo, {
-                Size = UDim2.new(0, 550, 0, 350)
-            })
-            showTween:Play()
-            ToggleButton.Text = "Hide Manager"
-            TweenService:Create(ToggleButton, TweenInfo.new(0.3), {
-                BackgroundColor3 = Color3.fromRGB(200, 60, 60)
-            }):Play()
-        else
-            if isMenuOpen then
-                toggleMenu()
-                wait(0.4)
-            end
-            local hideTween = TweenService:Create(main, tweenInfo, {
-                Size = UDim2.new(0, 0, 0, 0)
-            })
-            hideTween:Play()
-            hideTween.Completed:Wait()
-            main.Visible = false
-            OpenMenu.Visible = false
-            ToggleButton.Text = "Show Manager"
-            TweenService:Create(ToggleButton, TweenInfo.new(0.3), {
-                BackgroundColor3 = Color3.fromRGB(60, 120, 200)
-            }):Play()
-        end
-    end)
-    
-    ToggleButton.MouseEnter:Connect(function()
-        local hoverColor = isUIVisible and Color3.fromRGB(220, 80, 80) or Color3.fromRGB(80, 140, 220)
-        TweenService:Create(ToggleButton, TweenInfo.new(0.2), {
-            BackgroundColor3 = hoverColor,
-            Size = UDim2.new(0, 190, 0, 42)
-        }):Play()
-    end)
-    
-    ToggleButton.MouseLeave:Connect(function()
-        local normalColor = isUIVisible and Color3.fromRGB(200, 60, 60) or Color3.fromRGB(60, 120, 200)
-        TweenService:Create(ToggleButton, TweenInfo.new(0.2), {
-            BackgroundColor3 = normalColor,
-            Size = UDim2.new(0, 180, 0, 40)
-        }):Play()
-    end)
-    
     -- Store references
     self.ManagerPlus = ManagerPlus
     self.main = main
@@ -780,14 +707,10 @@ function Library:Create(config)
     -- Public Methods
     function self:Show()
         main.Visible = true
-        isUIVisible = true
-        ToggleButton.Text = "Hide Manager"
     end
     
     function self:Hide()
         main.Visible = false
-        isUIVisible = false
-        ToggleButton.Text = "Show Manager"
     end
     
     function self:Destroy()
