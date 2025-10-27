@@ -24,11 +24,21 @@ function Library:Create(config)
     local ImageButton = Instance.new("ImageButton")
     local UICorner_3 = Instance.new("UICorner")
     local UICorner_4 = Instance.new("UICorner")
-    local TabContainer = Instance.new("Frame")
+    local Tab = Instance.new("Frame")
+    local EntityManager = Instance.new("ScrollingFrame")
+    local UIListLayout_3 = Instance.new("UIListLayout")
+    local UIPadding_3 = Instance.new("UIPadding")
+    local PowerManager = Instance.new("ScrollingFrame")
+    local UIListLayout_4 = Instance.new("UIListLayout")
+    local UIPadding_Power = Instance.new("UIPadding")
     local OpenMenu = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local OpenMenuStroke = Instance.new("UIStroke")
     local UIListLayout_2 = Instance.new("UIListLayout")
+    local Entity = Instance.new("Frame")
+    local ImageButton_2 = Instance.new("ImageButton")
+    local Power = Instance.new("Frame")
+    local ImageButton_3 = Instance.new("ImageButton")
     
     -- Properties
     ManagerPlus.Name = config.Name or "ManagerPlus+"
@@ -139,17 +149,6 @@ function Library:Create(config)
     ImageButton.Image = "rbxassetid://13851089579"
     ImageButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
     
-    -- Tab Container
-    TabContainer.Name = "TabContainer"
-    TabContainer.Parent = main
-    TabContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    TabContainer.BackgroundTransparency = 1.000
-    TabContainer.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    TabContainer.BorderSizePixel = 0
-    TabContainer.Position = UDim2.new(0, 0, 0, 58)
-    TabContainer.Size = UDim2.new(1, 0, 1, -58)
-    TabContainer.ClipsDescendants = true
-    
     OpenMenu.Name = "Open-Menu"
     OpenMenu.Parent = Canvas
     OpenMenu.AnchorPoint = Vector2.new(0, 0)
@@ -157,7 +156,7 @@ function Library:Create(config)
     OpenMenu.BorderColor3 = Color3.fromRGB(0, 0, 0)
     OpenMenu.BorderSizePixel = 0
     OpenMenu.Position = UDim2.new(0.5, 550/2 + 8, 0.5, -350/2 + 8)
-    OpenMenu.Size = UDim2.new(0, 0, 0, 0)
+    OpenMenu.Size = UDim2.new(0, 0, 0, 75)
     OpenMenu.Visible = false
     OpenMenu.ClipsDescendants = true
     OpenMenu.ZIndex = 10000
@@ -174,23 +173,125 @@ function Library:Create(config)
     UIListLayout_2.Padding = UDim.new(0, 2)
     UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
     
-    -- ===== Helper Functions =====
+    Entity.Name = "Entity"
+    Entity.Parent = OpenMenu
+    Entity.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Entity.BackgroundTransparency = 1.000
+    Entity.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Entity.BorderSizePixel = 0
+    Entity.Size = UDim2.new(1, 0, 0, 35)
     
-    local function addButtonHover(button, normalColor, hoverColor)
-        button.MouseEnter:Connect(function()
-            TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = hoverColor}):Play()
-        end)
-        button.MouseLeave:Connect(function()
-            TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = normalColor}):Play()
-        end)
+    ImageButton_2.Parent = Entity
+    ImageButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
+    ImageButton_2.BackgroundColor3 = Color3.fromRGB(169, 169, 169)
+    ImageButton_2.BackgroundTransparency = 1.000
+    ImageButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton_2.BorderSizePixel = 0
+    ImageButton_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+    ImageButton_2.Size = UDim2.new(0.6, 0, 0.6, 0)
+    ImageButton_2.Image = "rbxassetid://13846536185"
+    ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    
+    Power.Name = "Power"
+    Power.Parent = OpenMenu
+    Power.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Power.BackgroundTransparency = 1.000
+    Power.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Power.BorderSizePixel = 0
+    Power.Size = UDim2.new(1, 0, 0, 35)
+    
+    ImageButton_3.Parent = Power
+    ImageButton_3.AnchorPoint = Vector2.new(0.5, 0.5)
+    ImageButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton_3.BackgroundTransparency = 1.000
+    ImageButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton_3.BorderSizePixel = 0
+    ImageButton_3.Position = UDim2.new(0.5, 0, 0.5, 0)
+    ImageButton_3.Size = UDim2.new(0.6, 0, 0.6, 0)
+    ImageButton_3.Image = "rbxassetid://14931189821"
+    ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    
+    Tab.Name = "Tab"
+    Tab.Parent = main
+    Tab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Tab.BackgroundTransparency = 1.000
+    Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Tab.BorderSizePixel = 0
+    Tab.Position = UDim2.new(0, 0, 0, 50)
+    Tab.Size = UDim2.new(1, 0, 1, -50)
+    Tab.ClipsDescendants = true
+    
+    EntityManager.Name = "Entity Manager"
+    EntityManager.Parent = Tab
+    EntityManager.Active = true
+    EntityManager.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    EntityManager.BackgroundTransparency = 1.000
+    EntityManager.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    EntityManager.BorderSizePixel = 0
+    EntityManager.Position = UDim2.new(0, 0, 0, 0)
+    EntityManager.Size = UDim2.new(1, 0, 1, 0)
+    EntityManager.Visible = true
+    EntityManager.ScrollBarThickness = 4
+    EntityManager.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 60)
+    
+    UIListLayout_3.Parent = EntityManager
+    UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout_3.Padding = UDim.new(0, 8)
+    
+    UIPadding_3.Parent = EntityManager
+    UIPadding_3.PaddingLeft = UDim.new(0, 2)
+    UIPadding_3.PaddingRight = UDim.new(0, 2)
+    UIPadding_3.PaddingTop = UDim.new(0, 10)
+    UIPadding_3.PaddingBottom = UDim.new(0, 2)
+    
+    PowerManager.Name = "Power Manager"
+    PowerManager.Parent = Tab
+    PowerManager.Active = true
+    PowerManager.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    PowerManager.BackgroundTransparency = 1.000
+    PowerManager.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    PowerManager.BorderSizePixel = 0
+    PowerManager.Position = UDim2.new(0, 0, 0, 0)
+    PowerManager.Size = UDim2.new(1, 0, 1, 0)
+    PowerManager.Visible = false
+    PowerManager.ScrollBarThickness = 4
+    PowerManager.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 60)
+    
+    UIListLayout_4.Parent = PowerManager
+    UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout_4.Padding = UDim.new(0, 8)
+    
+    UIPadding_Power.Parent = PowerManager
+    UIPadding_Power.PaddingLeft = UDim.new(0, 2)
+    UIPadding_Power.PaddingRight = UDim.new(0, 2)
+    UIPadding_Power.PaddingTop = UDim.new(0, 10)
+    UIPadding_Power.PaddingBottom = UDim.new(0, 2)
+    
+    -- Variables
+    local dragging = false
+    local dragInput
+    local dragStart
+    local startPos
+    local currentTab = "Entity"
+    local isMenuOpen = false
+    
+    local function updateMenuPosition()
+        local mainPos = main.AbsolutePosition
+        local mainSize = main.AbsoluteSize
+        OpenMenu.Position = UDim2.new(0, mainPos.X + mainSize.X + 8, 0, mainPos.Y + 8)
     end
-    
-    -- Dragging
-    local dragging, dragInput, dragStart, startPos
     
     local function update(input)
         local delta = input.Position - dragStart
-        main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        main.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale,
+            startPos.Y.Offset + delta.Y
+        )
+        if isMenuOpen then
+            updateMenuPosition()
+        end
     end
     
     Top.InputBegan:Connect(function(input)
@@ -198,7 +299,6 @@ function Library:Create(config)
             dragging = true
             dragStart = input.Position
             startPos = main.Position
-            
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -219,31 +319,183 @@ function Library:Create(config)
         end
     end)
     
-    -- Menu Toggle
-    local menuOpen = false
-    ImageButton.MouseButton1Click:Connect(function()
-        menuOpen = not menuOpen
-        if menuOpen then
+    local function toggleMenu()
+        isMenuOpen = not isMenuOpen
+        local rotationTween = TweenService:Create(ImageButton, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            Rotation = isMenuOpen and 90 or 0
+        })
+        if isMenuOpen then
+            updateMenuPosition()
             OpenMenu.Visible = true
-            local targetSize = UDim2.new(0, 50, 0, 37 * #OpenMenu:GetChildren() - 2)
-            TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Size = targetSize}):Play()
+            OpenMenu.Size = UDim2.new(0, 0, 0, 75)
+            OpenMenuStroke.Transparency = 1
+            local menuTween = TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+                Size = UDim2.new(0, 35, 0, 75)
+            })
+            local strokeTween = TweenService:Create(OpenMenuStroke, TweenInfo.new(0.3), {
+                Transparency = 0
+            })
+            menuTween:Play()
+            strokeTween:Play()
+            for i, button in pairs({Entity, Power}) do
+                local img = button:FindFirstChildOfClass("ImageButton")
+                if img then
+                    img.ImageTransparency = 1
+                end
+                wait(0.05)
+                if img then
+                    TweenService:Create(img, TweenInfo.new(0.2), {ImageTransparency = 0}):Play()
+                end
+            end
         else
-            TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Size = UDim2.new(0, 0, 0, OpenMenu.Size.Y.Offset)}):Play()
-            task.wait(0.3)
+            local strokeTween = TweenService:Create(OpenMenuStroke, TweenInfo.new(0.2), {
+                Transparency = 1
+            })
+            local menuTween = TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+                Size = UDim2.new(0, 0, 0, 75)
+            })
+            strokeTween:Play()
+            menuTween:Play()
+            menuTween.Completed:Wait()
             OpenMenu.Visible = false
         end
+        rotationTween:Play()
+    end
+    
+    ImageButton.MouseButton1Click:Connect(toggleMenu)
+    
+    local function switchTab(tabName)
+        if currentTab == tabName then return end
+        local oldTab = currentTab == "Entity" and EntityManager or PowerManager
+        local newTab = tabName == "Entity" and EntityManager or PowerManager
+        local slideOutTween = TweenService:Create(oldTab, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+            Position = UDim2.new(-1, 0, 0, 0)
+        })
+        slideOutTween:Play()
+        slideOutTween.Completed:Wait()
+        oldTab.Visible = false
+        oldTab.Position = UDim2.new(0, 0, 0, 0)
+        newTab.Visible = true
+        newTab.Position = UDim2.new(1, 0, 0, 0)
+        local slideInTween = TweenService:Create(newTab, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0, 0, 0, 0)
+        })
+        slideInTween:Play()
+        local titleFadeOut = TweenService:Create(Title, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+            TextTransparency = 1
+        })
+        titleFadeOut:Play()
+        titleFadeOut.Completed:Wait()
+        Title.Text = tabName == "Entity" and (config.EntityTitle or "Entity Manager [ Premium ]") or (config.PowerTitle or "Power Manager [ Premium ]")
+        local titleFadeIn = TweenService:Create(Title, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            TextTransparency = 0
+        })
+        titleFadeIn:Play()
+        local oldButton = currentTab == "Entity" and ImageButton_2 or ImageButton_3
+        local newButton = tabName == "Entity" and ImageButton_2 or ImageButton_3
+        TweenService:Create(oldButton, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(186, 186, 186)}):Play()
+        TweenService:Create(newButton, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(100, 200, 255)}):Play()
+        currentTab = tabName
+    end
+    
+    ImageButton_2.MouseButton1Click:Connect(function()
+        switchTab("Entity")
+        local scaleTween = TweenService:Create(ImageButton_2, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.new(0.7, 0, 0.7, 0)
+        })
+        scaleTween:Play()
+        scaleTween.Completed:Wait()
+        TweenService:Create(ImageButton_2, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.new(0.6, 0, 0.6, 0)
+        }):Play()
     end)
+    
+    ImageButton_3.MouseButton1Click:Connect(function()
+        switchTab("Power")
+        local scaleTween = TweenService:Create(ImageButton_3, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.new(0.7, 0, 0.7, 0)
+        })
+        scaleTween:Play()
+        scaleTween.Completed:Wait()
+        TweenService:Create(ImageButton_3, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.new(0.6, 0, 0.6, 0)
+        }):Play()
+    end)
+    
+    ImageButton.MouseEnter:Connect(function()
+        TweenService:Create(ImageButton, TweenInfo.new(0.2), {
+            ImageColor3 = Color3.fromRGB(100, 200, 255),
+            Size = UDim2.new(0.8, 0, 0.8, 0)
+        }):Play()
+    end)
+    
+    ImageButton.MouseLeave:Connect(function()
+        TweenService:Create(ImageButton, TweenInfo.new(0.2), {
+            ImageColor3 = Color3.fromRGB(186, 186, 186),
+            Size = UDim2.new(0.7, 0, 0.7, 0)
+        }):Play()
+    end)
+    
+    ImageButton_2.MouseEnter:Connect(function()
+        if currentTab ~= "Entity" then
+            TweenService:Create(ImageButton_2, TweenInfo.new(0.2), {
+                ImageColor3 = Color3.fromRGB(220, 220, 220),
+                Size = UDim2.new(0.7, 0, 0.7, 0)
+            }):Play()
+        end
+    end)
+    
+    ImageButton_2.MouseLeave:Connect(function()
+        if currentTab ~= "Entity" then
+            TweenService:Create(ImageButton_2, TweenInfo.new(0.2), {
+                ImageColor3 = Color3.fromRGB(186, 186, 186),
+                Size = UDim2.new(0.6, 0, 0.6, 0)
+            }):Play()
+        end
+    end)
+    
+    ImageButton_3.MouseEnter:Connect(function()
+        if currentTab ~= "Power" then
+            TweenService:Create(ImageButton_3, TweenInfo.new(0.2), {
+                ImageColor3 = Color3.fromRGB(220, 220, 220),
+                Size = UDim2.new(0.7, 0, 0.7, 0)
+            }):Play()
+        end
+    end)
+    
+    ImageButton_3.MouseLeave:Connect(function()
+        if currentTab ~= "Power" then
+            TweenService:Create(ImageButton_3, TweenInfo.new(0.2), {
+                ImageColor3 = Color3.fromRGB(186, 186, 186),
+                Size = UDim2.new(0.6, 0, 0.6, 0)
+            }):Play()
+        end
+    end)
+    
+    TweenService:Create(ImageButton_2, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(100, 200, 255)}):Play()
+    
+    -- Helper function for button hover
+    local function addButtonHover(button, normalColor, hoverColor)
+        button.MouseEnter:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.15), {
+                ImageColor3 = hoverColor or Color3.fromRGB(255, 255, 255)
+            }):Play()
+        end)
+        button.MouseLeave:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.15), {
+                ImageColor3 = normalColor or Color3.fromRGB(186, 186, 186)
+            }):Play()
+        end)
+    end
     
     -- Store references
     self.ManagerPlus = ManagerPlus
     self.main = main
     self.Title = Title
     self.Description = Description
-    self.TabContainer = TabContainer
-    self.OpenMenu = OpenMenu
+    self.EntityManager = EntityManager
+    self.PowerManager = PowerManager
     self.TweenService = TweenService
-    self.Tabs = {}
-    self.CurrentTab = nil
     
     -- ===== Public Methods =====
     
@@ -267,134 +519,28 @@ function Library:Create(config)
         Description.Text = desc
     end
     
-    -- ===== NEW: Add Tab Function =====
-    
-    function self:AddTab(tabConfig)
-        tabConfig = tabConfig or {}
-        local tabName = tabConfig.Name or "Tab"
-        local tabIcon = tabConfig.Icon or "rbxassetid://13846536185"
-        
-        -- Create ScrollingFrame for this tab
-        local TabScrollFrame = Instance.new("ScrollingFrame")
-        TabScrollFrame.Name = tabName
-        TabScrollFrame.Parent = TabContainer
-        TabScrollFrame.Active = true
-        TabScrollFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        TabScrollFrame.BackgroundTransparency = 1.000
-        TabScrollFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        TabScrollFrame.BorderSizePixel = 0
-        TabScrollFrame.Position = UDim2.new(0, 8, 0, 8)
-        TabScrollFrame.Size = UDim2.new(1, -16, 1, -16)
-        TabScrollFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-        TabScrollFrame.ScrollBarThickness = 4
-        TabScrollFrame.ScrollBarImageColor3 = Color3.fromRGB(85, 85, 85)
-        TabScrollFrame.Visible = false
-        
-        local UIListLayout = Instance.new("UIListLayout")
-        UIListLayout.Parent = TabScrollFrame
-        UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-        UIListLayout.Padding = UDim.new(0, 4)
-        
-        local UIPadding = Instance.new("UIPadding")
-        UIPadding.Parent = TabScrollFrame
-        UIPadding.PaddingTop = UDim.new(0, 2)
-        
-        -- Auto-resize canvas
-        UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-            TabScrollFrame.CanvasSize = UDim2.new(0, 0, 0, UIListLayout.AbsoluteContentSize.Y + 4)
-        end)
-        
-        -- Create button in OpenMenu
-        local TabButton = Instance.new("Frame")
-        TabButton.Name = tabName
-        TabButton.Parent = OpenMenu
-        TabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        TabButton.BackgroundTransparency = 1.000
-        TabButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        TabButton.BorderSizePixel = 0
-        TabButton.Size = UDim2.new(1, 0, 0, 35)
-        
-        local TabImageButton = Instance.new("ImageButton")
-        TabImageButton.Parent = TabButton
-        TabImageButton.AnchorPoint = Vector2.new(0.5, 0.5)
-        TabImageButton.BackgroundColor3 = Color3.fromRGB(169, 169, 169)
-        TabImageButton.BackgroundTransparency = 1.000
-        TabImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        TabImageButton.BorderSizePixel = 0
-        TabImageButton.Position = UDim2.new(0.5, 0, 0.5, 0)
-        TabImageButton.Size = UDim2.new(0.6, 0, 0.6, 0)
-        TabImageButton.Image = tabIcon
-        TabImageButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
-        
-        addButtonHover(TabImageButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 200, 255))
-        
-        -- Tab switching
-        TabImageButton.MouseButton1Click:Connect(function()
-            self:SwitchTab(tabName)
-        end)
-        
-        -- Store tab data
-        local tabObject = {
-            Name = tabName,
-            ScrollFrame = TabScrollFrame,
-            Button = TabButton,
-            ImageButton = TabImageButton
-        }
-        
-        function tabObject:AddItem(itemConfig)
-            return self:CreateItem(tabName, itemConfig)
-        end
-        
-        self.Tabs[tabName] = tabObject
-        
-        -- If this is the first tab, make it active
-        if not self.CurrentTab then
-            self:SwitchTab(tabName)
-        end
-        
-        -- Update menu size
-        task.spawn(function()
-            task.wait()
-            if menuOpen then
-                local targetSize = UDim2.new(0, 50, 0, 37 * #OpenMenu:GetChildren() - 2)
-                TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Size = targetSize}):Play()
-            end
-        end)
-        
-        return tabObject
+    function self:GetEntityManager()
+        return EntityManager
     end
     
-    function self:SwitchTab(tabName)
-        if not self.Tabs[tabName] then return end
-        
-        -- Hide all tabs
-        for name, tab in pairs(self.Tabs) do
-            tab.ScrollFrame.Visible = false
-            tab.ImageButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
-        end
-        
-        -- Show selected tab
-        self.Tabs[tabName].ScrollFrame.Visible = true
-        self.Tabs[tabName].ImageButton.ImageColor3 = Color3.fromRGB(100, 200, 255)
-        self.CurrentTab = tabName
+    function self:GetPowerManager()
+        return PowerManager
     end
     
-    function self:GetTab(tabName)
-        return self.Tabs[tabName]
+    -- ===== NEW: Add Item Functions =====
+    
+    function self:AddEntity(itemConfig)
+        return self:CreateItem("Entity", itemConfig)
     end
     
-    -- ===== Create Item Function =====
+    function self:AddPower(itemConfig)
+        return self:CreateItem("Power", itemConfig)
+    end
     
-    function self:CreateItem(tabName, itemConfig)
+    function self:CreateItem(tab, itemConfig)
         itemConfig = itemConfig or {}
         
-        local tab = self.Tabs[tabName]
-        if not tab then
-            warn("Tab '" .. tabName .. "' does not exist!")
-            return
-        end
-        
-        local parent = tab.ScrollFrame
+        local parent = tab == "Entity" and EntityManager or PowerManager
         
         -- Create Frame
         local Frame = Instance.new("Frame")
