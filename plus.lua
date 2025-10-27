@@ -27,10 +27,31 @@ function Library:Create(config)
     local Tab = Instance.new("Frame")
     local EntityManager = Instance.new("ScrollingFrame")
     local UIListLayout_3 = Instance.new("UIListLayout")
+    local Frame_2 = Instance.new("Frame")
+    local UICorner_5 = Instance.new("UICorner")
+    local TextButton = Instance.new("TextButton")
+    local UIPadding = Instance.new("UIPadding")
+    local Frame_3 = Instance.new("Frame")
+    local UICorner_6 = Instance.new("UICorner")
+    local ImageButton_4 = Instance.new("ImageButton")
+    local UIGradient_2 = Instance.new("UIGradient")
+    local ImageButton_5 = Instance.new("ImageButton")
+    local TextButton_2 = Instance.new("TextButton")
+    local UIPadding_2 = Instance.new("UIPadding")
     local UIPadding_3 = Instance.new("UIPadding")
     local PowerManager = Instance.new("ScrollingFrame")
     local UIListLayout_4 = Instance.new("UIListLayout")
-    local UIPadding_Power = Instance.new("UIPadding")
+    local Frame_4 = Instance.new("Frame")
+    local UICorner_7 = Instance.new("UICorner")
+    local TextButton_3 = Instance.new("TextButton")
+    local UIPadding_4 = Instance.new("UIPadding")
+    local Frame_5 = Instance.new("Frame")
+    local UICorner_8 = Instance.new("UICorner")
+    local ImageButton_6 = Instance.new("ImageButton")
+    local UIGradient_3 = Instance.new("UIGradient")
+    local ImageButton_7 = Instance.new("ImageButton")
+    local TextButton_4 = Instance.new("TextButton")
+    local UIPadding_5 = Instance.new("UIPadding")
     local OpenMenu = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local OpenMenuStroke = Instance.new("UIStroke")
@@ -238,6 +259,96 @@ function Library:Create(config)
     UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout_3.Padding = UDim.new(0, 8)
     
+    Frame_2.Parent = EntityManager
+    Frame_2.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+    Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Frame_2.BorderSizePixel = 0
+    Frame_2.Size = UDim2.new(1, -4, 0, 60)
+    
+    local Frame2Stroke = Instance.new("UIStroke")
+    Frame2Stroke.Parent = Frame_2
+    Frame2Stroke.Color = Color3.fromRGB(50, 50, 50)
+    Frame2Stroke.Thickness = 1
+    
+    UICorner_5.CornerRadius = UDim.new(0, 6)
+    UICorner_5.Parent = Frame_2
+    
+    TextButton.Parent = Frame_2
+    TextButton.AnchorPoint = Vector2.new(0, 0.5)
+    TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.BackgroundTransparency = 1.000
+    TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    TextButton.BorderSizePixel = 0
+    TextButton.Position = UDim2.new(0, 0, 0.35, 0)
+    TextButton.Size = UDim2.new(0.75, 0, 0, 18)
+    TextButton.Font = Enum.Font.GothamBold
+    TextButton.Text = "Entity name"
+    TextButton.TextColor3 = Color3.fromRGB(226, 226, 226)
+    TextButton.TextSize = 15
+    TextButton.TextWrapped = false
+    TextButton.TextXAlignment = Enum.TextXAlignment.Left
+    
+    UIPadding.Parent = TextButton
+    UIPadding.PaddingLeft = UDim.new(0, 12)
+    
+    Frame_3.Parent = Frame_2
+    Frame_3.AnchorPoint = Vector2.new(1, 0.5)
+    Frame_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Frame_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Frame_3.BorderSizePixel = 0
+    Frame_3.Position = UDim2.new(0.98, 0, 0.5, 0)
+    Frame_3.Size = UDim2.new(0, 50, 0, 50)
+    
+    UICorner_6.CornerRadius = UDim.new(0, 6)
+    UICorner_6.Parent = Frame_3
+    
+    ImageButton_4.Parent = Frame_3
+    ImageButton_4.AnchorPoint = Vector2.new(0.5, 0.5)
+    ImageButton_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton_4.BackgroundTransparency = 1.000
+    ImageButton_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton_4.BorderSizePixel = 0
+    ImageButton_4.Position = UDim2.new(0.5, 0, 0.3, 0)
+    ImageButton_4.Size = UDim2.new(0.5, 0, 0.5, 0)
+    ImageButton_4.Image = "rbxassetid://13858693179"
+    ImageButton_4.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    
+    UIGradient_2.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(24, 24, 24)), 
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 45, 45))
+    }
+    UIGradient_2.Rotation = -33
+    UIGradient_2.Parent = Frame_3
+    
+    ImageButton_5.Parent = Frame_3
+    ImageButton_5.AnchorPoint = Vector2.new(0.5, 0.5)
+    ImageButton_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton_5.BackgroundTransparency = 1.000
+    ImageButton_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton_5.BorderSizePixel = 0
+    ImageButton_5.Position = UDim2.new(0.5, 0, 0.7, 0)
+    ImageButton_5.Size = UDim2.new(0.5, 0, 0.5, 0)
+    ImageButton_5.Image = "rbxassetid://13858682222"
+    ImageButton_5.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    
+    TextButton_2.Parent = Frame_2
+    TextButton_2.AnchorPoint = Vector2.new(0, 0.5)
+    TextButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton_2.BackgroundTransparency = 1.000
+    TextButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    TextButton_2.BorderSizePixel = 0
+    TextButton_2.Position = UDim2.new(0, 0, 0.65, 0)
+    TextButton_2.Size = UDim2.new(0.75, 0, 0, 14)
+    TextButton_2.Font = Enum.Font.Gotham
+    TextButton_2.Text = "Found : Null"
+    TextButton_2.TextColor3 = Color3.fromRGB(177, 177, 177)
+    TextButton_2.TextSize = 12
+    TextButton_2.TextWrapped = false
+    TextButton_2.TextXAlignment = Enum.TextXAlignment.Left
+    
+    UIPadding_2.Parent = TextButton_2
+    UIPadding_2.PaddingLeft = UDim.new(0, 12)
+    
     UIPadding_3.Parent = EntityManager
     UIPadding_3.PaddingLeft = UDim.new(0, 2)
     UIPadding_3.PaddingRight = UDim.new(0, 2)
@@ -261,6 +372,97 @@ function Library:Create(config)
     UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout_4.Padding = UDim.new(0, 8)
     
+    Frame_4.Parent = PowerManager
+    Frame_4.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+    Frame_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Frame_4.BorderSizePixel = 0
+    Frame_4.Size = UDim2.new(1, -4, 0, 60)
+    
+    local Frame4Stroke = Instance.new("UIStroke")
+    Frame4Stroke.Parent = Frame_4
+    Frame4Stroke.Color = Color3.fromRGB(50, 50, 50)
+    Frame4Stroke.Thickness = 1
+    
+    UICorner_7.CornerRadius = UDim.new(0, 6)
+    UICorner_7.Parent = Frame_4
+    
+    TextButton_3.Parent = Frame_4
+    TextButton_3.AnchorPoint = Vector2.new(0, 0.5)
+    TextButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton_3.BackgroundTransparency = 1.000
+    TextButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    TextButton_3.BorderSizePixel = 0
+    TextButton_3.Position = UDim2.new(0, 0, 0.35, 0)
+    TextButton_3.Size = UDim2.new(0.75, 0, 0, 18)
+    TextButton_3.Font = Enum.Font.GothamBold
+    TextButton_3.Text = "Boost Speed [ + ]"
+    TextButton_3.TextColor3 = Color3.fromRGB(226, 226, 226)
+    TextButton_3.TextSize = 15
+    TextButton_3.TextWrapped = false
+    TextButton_3.TextXAlignment = Enum.TextXAlignment.Left
+    
+    UIPadding_4.Parent = TextButton_3
+    UIPadding_4.PaddingLeft = UDim.new(0, 12)
+    
+    Frame_5.Parent = Frame_4
+    Frame_5.AnchorPoint = Vector2.new(1, 0.5)
+    Frame_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Frame_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Frame_5.BorderSizePixel = 0
+    Frame_5.Position = UDim2.new(0.98, 0, 0.5, 0)
+    Frame_5.Size = UDim2.new(0, 50, 0, 50)
+    
+    UICorner_8.CornerRadius = UDim.new(0, 6)
+    UICorner_8.Parent = Frame_5
+    
+    ImageButton_6.Parent = Frame_5
+    ImageButton_6.AnchorPoint = Vector2.new(0.5, 0.5)
+    ImageButton_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton_6.BackgroundTransparency = 1.000
+    ImageButton_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton_6.BorderSizePixel = 0
+    ImageButton_6.Position = UDim2.new(0.5, 0, 0.3, 0)
+    ImageButton_6.Size = UDim2.new(0.5, 0, 0.5, 0)
+    ImageButton_6.Image = "rbxassetid://13858693179"
+    ImageButton_6.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    
+    UIGradient_3.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(24, 24, 24)), 
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 45, 45))
+    }
+    UIGradient_3.Rotation = -33
+    UIGradient_3.Parent = Frame_5
+    
+    ImageButton_7.Parent = Frame_5
+    ImageButton_7.AnchorPoint = Vector2.new(0.5, 0.5)
+    ImageButton_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton_7.BackgroundTransparency = 1.000
+    ImageButton_7.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ImageButton_7.BorderSizePixel = 0
+    ImageButton_7.Position = UDim2.new(0.5, 0, 0.7, 0)
+    ImageButton_7.Size = UDim2.new(0.5, 0, 0.5, 0)
+    ImageButton_7.Image = "rbxassetid://13858682222"
+    ImageButton_7.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    
+    TextButton_4.Parent = Frame_4
+    TextButton_4.AnchorPoint = Vector2.new(0, 0.5)
+    TextButton_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton_4.BackgroundTransparency = 1.000
+    TextButton_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    TextButton_4.BorderSizePixel = 0
+    TextButton_4.Position = UDim2.new(0, 0, 0.65, 0)
+    TextButton_4.Size = UDim2.new(0.75, 0, 0, 14)
+    TextButton_4.Font = Enum.Font.Gotham
+    TextButton_4.Text = "Found : Null"
+    TextButton_4.TextColor3 = Color3.fromRGB(177, 177, 177)
+    TextButton_4.TextSize = 12
+    TextButton_4.TextWrapped = false
+    TextButton_4.TextXAlignment = Enum.TextXAlignment.Left
+    
+    UIPadding_5.Parent = TextButton_4
+    UIPadding_5.PaddingLeft = UDim.new(0, 12)
+    
+    local UIPadding_Power = Instance.new("UIPadding")
     UIPadding_Power.Parent = PowerManager
     UIPadding_Power.PaddingLeft = UDim.new(0, 2)
     UIPadding_Power.PaddingRight = UDim.new(0, 2)
@@ -274,6 +476,8 @@ function Library:Create(config)
     local startPos
     local currentTab = "Entity"
     local isMenuOpen = false
+    
+    -- ===== ลบ Toggle Button ออกแล้ว =====
     
     local function updateMenuPosition()
         local mainPos = main.AbsolutePosition
@@ -386,7 +590,7 @@ function Library:Create(config)
         })
         titleFadeOut:Play()
         titleFadeOut.Completed:Wait()
-        Title.Text = tabName == "Entity" and (config.EntityTitle or "Entity Manager [ Premium ]") or (config.PowerTitle or "Power Manager [ Premium ]")
+        Title.Text = tabName == "Entity" and "Entity Manager [ Premium ]" or "Power Manager [ Premium ]"
         local titleFadeIn = TweenService:Create(Title, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
             TextTransparency = 0
         })
@@ -472,9 +676,6 @@ function Library:Create(config)
         end
     end)
     
-    TweenService:Create(ImageButton_2, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(100, 200, 255)}):Play()
-    
-    -- Helper function for button hover
     local function addButtonHover(button, normalColor, hoverColor)
         button.MouseEnter:Connect(function()
             TweenService:Create(button, TweenInfo.new(0.15), {
@@ -488,6 +689,13 @@ function Library:Create(config)
         end)
     end
     
+    addButtonHover(ImageButton_4, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 255, 100))
+    addButtonHover(ImageButton_5, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 100, 100))
+    addButtonHover(ImageButton_6, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 255, 100))
+    addButtonHover(ImageButton_7, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 100, 100))
+    
+    TweenService:Create(ImageButton_2, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(100, 200, 255)}):Play()
+    
     -- Store references
     self.ManagerPlus = ManagerPlus
     self.main = main
@@ -495,10 +703,8 @@ function Library:Create(config)
     self.Description = Description
     self.EntityManager = EntityManager
     self.PowerManager = PowerManager
-    self.TweenService = TweenService
     
-    -- ===== Public Methods =====
-    
+    -- Public Methods
     function self:Show()
         main.Visible = true
     end
@@ -525,170 +731,6 @@ function Library:Create(config)
     
     function self:GetPowerManager()
         return PowerManager
-    end
-    
-    -- ===== NEW: Add Item Functions =====
-    
-    function self:AddEntity(itemConfig)
-        return self:CreateItem("Entity", itemConfig)
-    end
-    
-    function self:AddPower(itemConfig)
-        return self:CreateItem("Power", itemConfig)
-    end
-    
-    function self:CreateItem(tab, itemConfig)
-        itemConfig = itemConfig or {}
-        
-        local parent = tab == "Entity" and EntityManager or PowerManager
-        
-        -- Create Frame
-        local Frame = Instance.new("Frame")
-        Frame.Name = itemConfig.Text or "Item"
-        Frame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
-        Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        Frame.BorderSizePixel = 0
-        Frame.Size = UDim2.new(1, -4, 0, 60)
-        Frame.Parent = parent
-        
-        local FrameStroke = Instance.new("UIStroke")
-        FrameStroke.Parent = Frame
-        FrameStroke.Color = Color3.fromRGB(50, 50, 50)
-        FrameStroke.Thickness = 1
-        
-        local FrameCorner = Instance.new("UICorner")
-        FrameCorner.CornerRadius = UDim.new(0, 6)
-        FrameCorner.Parent = Frame
-        
-        -- Text Label
-        local TextLabel = Instance.new("TextButton")
-        TextLabel.Parent = Frame
-        TextLabel.AnchorPoint = Vector2.new(0, 0.5)
-        TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        TextLabel.BackgroundTransparency = 1.000
-        TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        TextLabel.BorderSizePixel = 0
-        TextLabel.Position = UDim2.new(0, 0, 0.35, 0)
-        TextLabel.Size = UDim2.new(0.75, 0, 0, 18)
-        TextLabel.Font = Enum.Font.GothamBold
-        TextLabel.Text = itemConfig.Text or "Item Name"
-        TextLabel.TextColor3 = Color3.fromRGB(226, 226, 226)
-        TextLabel.TextSize = 15
-        TextLabel.TextWrapped = false
-        TextLabel.TextXAlignment = Enum.TextXAlignment.Left
-        
-        local TextPadding = Instance.new("UIPadding")
-        TextPadding.Parent = TextLabel
-        TextPadding.PaddingLeft = UDim.new(0, 12)
-        
-        -- Button Frame
-        local ButtonFrame = Instance.new("Frame")
-        ButtonFrame.Parent = Frame
-        ButtonFrame.AnchorPoint = Vector2.new(1, 0.5)
-        ButtonFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ButtonFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        ButtonFrame.BorderSizePixel = 0
-        ButtonFrame.Position = UDim2.new(0.98, 0, 0.5, 0)
-        ButtonFrame.Size = UDim2.new(0, 50, 0, 50)
-        
-        local ButtonCorner = Instance.new("UICorner")
-        ButtonCorner.CornerRadius = UDim.new(0, 6)
-        ButtonCorner.Parent = ButtonFrame
-        
-        local ButtonGradient = Instance.new("UIGradient")
-        ButtonGradient.Color = ColorSequence.new{
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(24, 24, 24)), 
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 45, 45))
-        }
-        ButtonGradient.Rotation = -33
-        ButtonGradient.Parent = ButtonFrame
-        
-        -- Activate Button (Green)
-        local ActivateButton = Instance.new("ImageButton")
-        ActivateButton.Parent = ButtonFrame
-        ActivateButton.AnchorPoint = Vector2.new(0.5, 0.5)
-        ActivateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ActivateButton.BackgroundTransparency = 1.000
-        ActivateButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        ActivateButton.BorderSizePixel = 0
-        ActivateButton.Position = UDim2.new(0.5, 0, 0.3, 0)
-        ActivateButton.Size = UDim2.new(0.5, 0, 0.5, 0)
-        ActivateButton.Image = "rbxassetid://13858693179"
-        ActivateButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
-        
-        -- Delete Button (Red)
-        local DeleteButton = Instance.new("ImageButton")
-        DeleteButton.Parent = ButtonFrame
-        DeleteButton.AnchorPoint = Vector2.new(0.5, 0.5)
-        DeleteButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        DeleteButton.BackgroundTransparency = 1.000
-        DeleteButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        DeleteButton.BorderSizePixel = 0
-        DeleteButton.Position = UDim2.new(0.5, 0, 0.7, 0)
-        DeleteButton.Size = UDim2.new(0.5, 0, 0.5, 0)
-        DeleteButton.Image = "rbxassetid://13858682222"
-        DeleteButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
-        
-        -- Description Label
-        local DescLabel = Instance.new("TextButton")
-        DescLabel.Parent = Frame
-        DescLabel.AnchorPoint = Vector2.new(0, 0.5)
-        DescLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        DescLabel.BackgroundTransparency = 1.000
-        DescLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        DescLabel.BorderSizePixel = 0
-        DescLabel.Position = UDim2.new(0, 0, 0.65, 0)
-        DescLabel.Size = UDim2.new(0.75, 0, 0, 14)
-        DescLabel.Font = Enum.Font.Gotham
-        DescLabel.Text = itemConfig.Description or "No Description"
-        DescLabel.TextColor3 = Color3.fromRGB(177, 177, 177)
-        DescLabel.TextSize = 12
-        DescLabel.TextWrapped = false
-        DescLabel.TextXAlignment = Enum.TextXAlignment.Left
-        
-        local DescPadding = Instance.new("UIPadding")
-        DescPadding.Parent = DescLabel
-        DescPadding.PaddingLeft = UDim.new(0, 12)
-        
-        -- Button Events
-        addButtonHover(ActivateButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 255, 100))
-        addButtonHover(DeleteButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 100, 100))
-        
-        ActivateButton.MouseButton1Click:Connect(function()
-            if itemConfig.OnActivate then
-                itemConfig.OnActivate()
-            end
-        end)
-        
-        DeleteButton.MouseButton1Click:Connect(function()
-            if itemConfig.OnDelete then
-                itemConfig.OnDelete()
-            end
-            Frame:Destroy()
-        end)
-        
-        -- Return item object
-        local itemObject = {
-            Frame = Frame,
-            TextLabel = TextLabel,
-            DescLabel = DescLabel,
-            ActivateButton = ActivateButton,
-            DeleteButton = DeleteButton
-        }
-        
-        function itemObject:UpdateText(text)
-            TextLabel.Text = text
-        end
-        
-        function itemObject:UpdateDescription(desc)
-            DescLabel.Text = desc
-        end
-        
-        function itemObject:Remove()
-            Frame:Destroy()
-        end
-        
-        return itemObject
     end
     
     return self
