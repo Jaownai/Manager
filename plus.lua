@@ -1,3 +1,21 @@
+--[[
+    Manager UI Library - Final Version
+    ✅ ลบปุ่ม Toggle Manager ออกหมดแล้ว
+    ✅ มีฟังก์ชัน AddItem สำหรับเพิ่ม Entity/Power
+    
+    การใช้งาน:
+    local Library = loadstring(game:HttpGet("YOUR_URL"))()
+    local Manager = Library:Create()
+    
+    -- เพิ่ม Item
+    Manager:AddEntity({
+        Text = "Rush",
+        Description = "Found: Yes",
+        OnActivate = function() print("Activated!") end,
+        OnDelete = function() print("Deleted!") end
+    })
+]]
+
 local Library = {}
 Library.__index = Library
 
