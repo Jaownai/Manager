@@ -362,7 +362,7 @@ function Library:Create(config)
     end)
     
     -- Button Hover Effects
-    addButtonHover(ImageButton, Color3.fromRGB(200, 200, 200), Color3.fromRGB(255, 255, 255))
+    addButtonHover(ImageButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 255, 255))
     addButtonHover(ImageButton_2, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
     addButtonHover(ImageButton_3, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
     
@@ -504,21 +504,6 @@ function Library:Create(config)
         FrameCorner.CornerRadius = UDim.new(0, 6)
         FrameCorner.Parent = Frame
         
-        -- ===== Selection Indicator =====
-        local SelectionIndicator = Instance.new("Frame")
-        SelectionIndicator.Name = "SelectionIndicator"
-        SelectionIndicator.Parent = Frame
-        SelectionIndicator.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-        SelectionIndicator.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        SelectionIndicator.BorderSizePixel = 0
-        SelectionIndicator.Position = UDim2.new(0, 0, 0, 0)
-        SelectionIndicator.Size = UDim2.new(0, 3, 1, 0)
-        SelectionIndicator.Visible = false
-        
-        local IndicatorCorner = Instance.new("UICorner")
-        IndicatorCorner.CornerRadius = UDim.new(0, 6)
-        IndicatorCorner.Parent = SelectionIndicator
-        
         -- ===== Priority Buttons (Left Side) =====
         local PriorityFrame = Instance.new("Frame")
         PriorityFrame.Name = "PriorityFrame"
@@ -569,6 +554,21 @@ function Library:Create(config)
         DownCorner.CornerRadius = UDim.new(0, 4)
         DownCorner.Parent = DownButton
         
+        -- ===== Selection Indicator =====
+        local SelectionIndicator = Instance.new("Frame")
+        SelectionIndicator.Name = "SelectionIndicator"
+        SelectionIndicator.Parent = Frame
+        SelectionIndicator.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+        SelectionIndicator.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        SelectionIndicator.BorderSizePixel = 0
+        SelectionIndicator.Position = UDim2.new(0, 0, 0, 0)
+        SelectionIndicator.Size = UDim2.new(0, 3, 1, 0)
+        SelectionIndicator.Visible = false
+        
+        local IndicatorCorner = Instance.new("UICorner")
+        IndicatorCorner.CornerRadius = UDim.new(0, 6)
+        IndicatorCorner.Parent = SelectionIndicator
+        
         -- Text Label (Clickable for Selection)
         local TextLabel = Instance.new("TextButton")
         TextLabel.Name = "TextLabel"
@@ -579,7 +579,7 @@ function Library:Create(config)
         TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
         TextLabel.BorderSizePixel = 0
         TextLabel.Position = UDim2.new(0, 40, 0.35, 0)
-        TextLabel.Size = UDim2.new(1, -50, 0, 18)
+        TextLabel.Size = UDim2.new(0.55, 0, 0, 18)
         TextLabel.Font = Enum.Font.GothamBold
         TextLabel.Text = itemConfig.Text or "Item Name"
         TextLabel.TextColor3 = Color3.fromRGB(226, 226, 226)
@@ -591,6 +591,57 @@ function Library:Create(config)
         TextPadding.Parent = TextLabel
         TextPadding.PaddingLeft = UDim.new(0, 4)
         
+        -- Button Frame (Right Side)
+        local ButtonFrame = Instance.new("Frame")
+        ButtonFrame.Name = "ButtonFrame"
+        ButtonFrame.Parent = Frame
+        ButtonFrame.AnchorPoint = Vector2.new(1, 0.5)
+        ButtonFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        ButtonFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        ButtonFrame.BorderSizePixel = 0
+        ButtonFrame.Position = UDim2.new(0.98, 0, 0.5, 0)
+        ButtonFrame.Size = UDim2.new(0, 50, 0, 50)
+        
+        local ButtonCorner = Instance.new("UICorner")
+        ButtonCorner.CornerRadius = UDim.new(0, 6)
+        ButtonCorner.Parent = ButtonFrame
+        
+        local ButtonGradient = Instance.new("UIGradient")
+        ButtonGradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(24, 24, 24)), 
+            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 45, 45))
+        }
+        ButtonGradient.Rotation = -33
+        ButtonGradient.Parent = ButtonFrame
+        
+        -- Activate Button (Green)
+        local ActivateButton = Instance.new("ImageButton")
+        ActivateButton.Name = "ActivateButton"
+        ActivateButton.Parent = ButtonFrame
+        ActivateButton.AnchorPoint = Vector2.new(0.5, 0.5)
+        ActivateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        ActivateButton.BackgroundTransparency = 1.000
+        ActivateButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        ActivateButton.BorderSizePixel = 0
+        ActivateButton.Position = UDim2.new(0.5, 0, 0.3, 0)
+        ActivateButton.Size = UDim2.new(0.5, 0, 0.5, 0)
+        ActivateButton.Image = "rbxassetid://13858693179"
+        ActivateButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
+        
+        -- Delete Button (Red)
+        local DeleteButton = Instance.new("ImageButton")
+        DeleteButton.Name = "DeleteButton"
+        DeleteButton.Parent = ButtonFrame
+        DeleteButton.AnchorPoint = Vector2.new(0.5, 0.5)
+        DeleteButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        DeleteButton.BackgroundTransparency = 1.000
+        DeleteButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        DeleteButton.BorderSizePixel = 0
+        DeleteButton.Position = UDim2.new(0.5, 0, 0.7, 0)
+        DeleteButton.Size = UDim2.new(0.5, 0, 0.5, 0)
+        DeleteButton.Image = "rbxassetid://13858682222"
+        DeleteButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
+        
         -- Description Label
         local DescLabel = Instance.new("TextButton")
         DescLabel.Name = "DescLabel"
@@ -601,7 +652,7 @@ function Library:Create(config)
         DescLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
         DescLabel.BorderSizePixel = 0
         DescLabel.Position = UDim2.new(0, 40, 0.65, 0)
-        DescLabel.Size = UDim2.new(1, -50, 0, 14)
+        DescLabel.Size = UDim2.new(0.55, 0, 0, 14)
         DescLabel.Font = Enum.Font.Gotham
         DescLabel.Text = itemConfig.Description or "No Description"
         DescLabel.TextColor3 = Color3.fromRGB(177, 177, 177)
@@ -618,6 +669,8 @@ function Library:Create(config)
             Frame = Frame,
             TextLabel = TextLabel,
             DescLabel = DescLabel,
+            ActivateButton = ActivateButton,
+            DeleteButton = DeleteButton,
             UpButton = UpButton,
             DownButton = DownButton,
             SelectionIndicator = SelectionIndicator,
@@ -679,6 +732,10 @@ function Library:Create(config)
             end
         end)
         
+        -- Button Hover Effects
+        addButtonHover(ActivateButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 255, 100))
+        addButtonHover(DeleteButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 100, 100))
+        
         -- Hover for Priority Buttons
         UpButton.MouseEnter:Connect(function()
             TweenService:Create(UpButton, TweenInfo.new(0.2), {
@@ -706,6 +763,31 @@ function Library:Create(config)
                 BackgroundColor3 = Color3.fromRGB(45, 45, 45),
                 TextColor3 = Color3.fromRGB(186, 186, 186)
             }):Play()
+        end)
+        
+        -- ===== Activate & Delete Events =====
+        ActivateButton.MouseButton1Click:Connect(function()
+            if itemConfig.OnActivate then
+                itemConfig.OnActivate()
+            end
+        end)
+        
+        DeleteButton.MouseButton1Click:Connect(function()
+            if itemConfig.OnDelete then
+                itemConfig.OnDelete()
+            end
+            
+            -- Remove from selected items if selected
+            if itemObject.IsSelected then
+                for i, item in ipairs(self.SelectedItems) do
+                    if item == itemObject then
+                        table.remove(self.SelectedItems, i)
+                        break
+                    end
+                end
+            end
+            
+            Frame:Destroy()
         end)
         
         -- ===== Item Methods =====
