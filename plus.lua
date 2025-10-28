@@ -20,7 +20,6 @@ function Library:Create(config)
     local Description = Instance.new("TextLabel")
     local Menu = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
-    local UIGradient = Instance.new("UIGradient")
     local ImageButton = Instance.new("ImageButton")
     local UICorner_3 = Instance.new("UICorner")
     local UICorner_4 = Instance.new("UICorner")
@@ -362,7 +361,7 @@ function Library:Create(config)
     end)
     
     -- Button Hover Effects
-    addButtonHover(ImageButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 255, 255))
+    addButtonHover(ImageButton, Color3.fromRGB(200, 200, 200), Color3.fromRGB(255, 255, 255))
     addButtonHover(ImageButton_2, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
     addButtonHover(ImageButton_3, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
     
@@ -416,52 +415,6 @@ function Library:Create(config)
         return self.SelectedItems
     end
     
-    -- ===== Helper: Move Item Priority =====
-    local function moveItemPriority(frame, direction)
-        local parent = frame.Parent
-        local children = parent:GetChildren()
-        
-        -- Filter only Frame items with LayoutOrder
-        local items = {}
-        for _, child in ipairs(children) do
-            if child:IsA("Frame") and child.LayoutOrder then
-                table.insert(items, child)
-            end
-        end
-        
-        -- Sort by current LayoutOrder
-        table.sort(items, function(a, b)
-            return a.LayoutOrder < b.LayoutOrder
-        end)
-        
-        -- Find current item index
-        local currentIndex = nil
-        for i, item in ipairs(items) do
-            if item == frame then
-                currentIndex = i
-                break
-            end
-        end
-        
-        if not currentIndex then return end
-        
-        -- Calculate target index
-        local targetIndex = currentIndex
-        if direction == "up" then
-            targetIndex = math.max(1, currentIndex - 1)
-        elseif direction == "down" then
-            targetIndex = math.min(#items, currentIndex + 1)
-        end
-        
-        -- If no movement needed
-        if targetIndex == currentIndex then return end
-        
-        -- Swap LayoutOrder
-        local temp = items[currentIndex].LayoutOrder
-        items[currentIndex].LayoutOrder = items[targetIndex].LayoutOrder
-        items[targetIndex].LayoutOrder = temp
-    end
-    
     -- ===== NEW: Add Item Functions =====
     
     function self:AddEntity(itemConfig)
@@ -504,56 +457,6 @@ function Library:Create(config)
         FrameCorner.CornerRadius = UDim.new(0, 6)
         FrameCorner.Parent = Frame
         
-        -- ===== Priority Buttons (Left Side) =====
-        local PriorityFrame = Instance.new("Frame")
-        PriorityFrame.Name = "PriorityFrame"
-        PriorityFrame.Parent = Frame
-        PriorityFrame.AnchorPoint = Vector2.new(0, 0.5)
-        PriorityFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        PriorityFrame.BackgroundTransparency = 1.000
-        PriorityFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        PriorityFrame.BorderSizePixel = 0
-        PriorityFrame.Position = UDim2.new(0, 8, 0.5, 0)
-        PriorityFrame.Size = UDim2.new(0, 25, 1, 0)
-        
-        -- Up Button
-        local UpButton = Instance.new("TextButton")
-        UpButton.Name = "UpButton"
-        UpButton.Parent = PriorityFrame
-        UpButton.AnchorPoint = Vector2.new(0.5, 0)
-        UpButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        UpButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        UpButton.BorderSizePixel = 0
-        UpButton.Position = UDim2.new(0.5, 0, 0.1, 0)
-        UpButton.Size = UDim2.new(1, 0, 0, 20)
-        UpButton.Font = Enum.Font.GothamBold
-        UpButton.Text = "▲"
-        UpButton.TextColor3 = Color3.fromRGB(186, 186, 186)
-        UpButton.TextSize = 10
-        
-        local UpCorner = Instance.new("UICorner")
-        UpCorner.CornerRadius = UDim.new(0, 4)
-        UpCorner.Parent = UpButton
-        
-        -- Down Button
-        local DownButton = Instance.new("TextButton")
-        DownButton.Name = "DownButton"
-        DownButton.Parent = PriorityFrame
-        DownButton.AnchorPoint = Vector2.new(0.5, 1)
-        DownButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        DownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        DownButton.BorderSizePixel = 0
-        DownButton.Position = UDim2.new(0.5, 0, 0.9, 0)
-        DownButton.Size = UDim2.new(1, 0, 0, 20)
-        DownButton.Font = Enum.Font.GothamBold
-        DownButton.Text = "▼"
-        DownButton.TextColor3 = Color3.fromRGB(186, 186, 186)
-        DownButton.TextSize = 10
-        
-        local DownCorner = Instance.new("UICorner")
-        DownCorner.CornerRadius = UDim.new(0, 4)
-        DownCorner.Parent = DownButton
-        
         -- ===== Selection Indicator =====
         local SelectionIndicator = Instance.new("Frame")
         SelectionIndicator.Name = "SelectionIndicator"
@@ -579,7 +482,7 @@ function Library:Create(config)
         TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
         TextLabel.BorderSizePixel = 0
         TextLabel.Position = UDim2.new(0, 40, 0.35, 0)
-        TextLabel.Size = UDim2.new(0.55, 0, 0, 18)
+        TextLabel.Size = UDim2.new(1, -50, 0, 18)
         TextLabel.Font = Enum.Font.GothamBold
         TextLabel.Text = itemConfig.Text or "Item Name"
         TextLabel.TextColor3 = Color3.fromRGB(226, 226, 226)
@@ -591,57 +494,6 @@ function Library:Create(config)
         TextPadding.Parent = TextLabel
         TextPadding.PaddingLeft = UDim.new(0, 4)
         
-        -- Button Frame (Right Side)
-        local ButtonFrame = Instance.new("Frame")
-        ButtonFrame.Name = "ButtonFrame"
-        ButtonFrame.Parent = Frame
-        ButtonFrame.AnchorPoint = Vector2.new(1, 0.5)
-        ButtonFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ButtonFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        ButtonFrame.BorderSizePixel = 0
-        ButtonFrame.Position = UDim2.new(0.98, 0, 0.5, 0)
-        ButtonFrame.Size = UDim2.new(0, 50, 0, 50)
-        
-        local ButtonCorner = Instance.new("UICorner")
-        ButtonCorner.CornerRadius = UDim.new(0, 6)
-        ButtonCorner.Parent = ButtonFrame
-        
-        local ButtonGradient = Instance.new("UIGradient")
-        ButtonGradient.Color = ColorSequence.new{
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(24, 24, 24)), 
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 45, 45))
-        }
-        ButtonGradient.Rotation = -33
-        ButtonGradient.Parent = ButtonFrame
-        
-        -- Activate Button (Green)
-        local ActivateButton = Instance.new("ImageButton")
-        ActivateButton.Name = "ActivateButton"
-        ActivateButton.Parent = ButtonFrame
-        ActivateButton.AnchorPoint = Vector2.new(0.5, 0.5)
-        ActivateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ActivateButton.BackgroundTransparency = 1.000
-        ActivateButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        ActivateButton.BorderSizePixel = 0
-        ActivateButton.Position = UDim2.new(0.5, 0, 0.3, 0)
-        ActivateButton.Size = UDim2.new(0.5, 0, 0.5, 0)
-        ActivateButton.Image = "rbxassetid://13858693179"
-        ActivateButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
-        
-        -- Delete Button (Red)
-        local DeleteButton = Instance.new("ImageButton")
-        DeleteButton.Name = "DeleteButton"
-        DeleteButton.Parent = ButtonFrame
-        DeleteButton.AnchorPoint = Vector2.new(0.5, 0.5)
-        DeleteButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        DeleteButton.BackgroundTransparency = 1.000
-        DeleteButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        DeleteButton.BorderSizePixel = 0
-        DeleteButton.Position = UDim2.new(0.5, 0, 0.7, 0)
-        DeleteButton.Size = UDim2.new(0.5, 0, 0.5, 0)
-        DeleteButton.Image = "rbxassetid://13858682222"
-        DeleteButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
-        
         -- Description Label
         local DescLabel = Instance.new("TextButton")
         DescLabel.Name = "DescLabel"
@@ -652,7 +504,7 @@ function Library:Create(config)
         DescLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
         DescLabel.BorderSizePixel = 0
         DescLabel.Position = UDim2.new(0, 40, 0.65, 0)
-        DescLabel.Size = UDim2.new(0.55, 0, 0, 14)
+        DescLabel.Size = UDim2.new(1, -50, 0, 14)
         DescLabel.Font = Enum.Font.Gotham
         DescLabel.Text = itemConfig.Description or "No Description"
         DescLabel.TextColor3 = Color3.fromRGB(177, 177, 177)
@@ -669,8 +521,6 @@ function Library:Create(config)
             Frame = Frame,
             TextLabel = TextLabel,
             DescLabel = DescLabel,
-            ActivateButton = ActivateButton,
-            DeleteButton = DeleteButton,
             UpButton = UpButton,
             DownButton = DownButton,
             SelectionIndicator = SelectionIndicator,
@@ -732,10 +582,6 @@ function Library:Create(config)
             end
         end)
         
-        -- Button Hover Effects
-        addButtonHover(ActivateButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 255, 100))
-        addButtonHover(DeleteButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 100, 100))
-        
         -- Hover for Priority Buttons
         UpButton.MouseEnter:Connect(function()
             TweenService:Create(UpButton, TweenInfo.new(0.2), {
@@ -765,33 +611,7 @@ function Library:Create(config)
             }):Play()
         end)
         
-        -- ===== Activate & Delete Events =====
-        ActivateButton.MouseButton1Click:Connect(function()
-            if itemConfig.OnActivate then
-                itemConfig.OnActivate()
-            end
-        end)
-        
-        DeleteButton.MouseButton1Click:Connect(function()
-            if itemConfig.OnDelete then
-                itemConfig.OnDelete()
-            end
-            
-            -- Remove from selected items if selected
-            if itemObject.IsSelected then
-                for i, item in ipairs(self.SelectedItems) do
-                    if item == itemObject then
-                        table.remove(self.SelectedItems, i)
-                        break
-                    end
-                end
-            end
-            
-            Frame:Destroy()
-        end)
-        
         -- ===== Item Methods =====
-        function itemObject:UpdateText(text)
             TextLabel.Text = text
         end
         
