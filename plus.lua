@@ -156,7 +156,7 @@ function Library:Create(config)
     OpenMenu.BorderColor3 = Color3.fromRGB(0, 0, 0)
     OpenMenu.BorderSizePixel = 0
     OpenMenu.Position = UDim2.new(0.5, 550/2 + 8, 0.5, -350/2 + 8)
-    OpenMenu.Size = UDim2.new(0, 0, 0, 75)
+    OpenMenu.Size = UDim2.new(0, 0, 0, 50)
     OpenMenu.Visible = false
     OpenMenu.ClipsDescendants = true
     OpenMenu.ZIndex = 10000
@@ -165,12 +165,12 @@ function Library:Create(config)
     OpenMenuStroke.Color = Color3.fromRGB(45, 45, 45)
     OpenMenuStroke.Thickness = 1.5
     
-    UICorner_2.CornerRadius = UDim.new(0, 6)
+    UICorner_2.CornerRadius = UDim.new(0, 8)
     UICorner_2.Parent = OpenMenu
     
     UIListLayout_2.Parent = OpenMenu
     UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-    UIListLayout_2.Padding = UDim.new(0, 2)
+    UIListLayout_2.Padding = UDim.new(0, 1)
     UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
     
     Entity.Name = "Entity"
@@ -179,7 +179,7 @@ function Library:Create(config)
     Entity.BackgroundTransparency = 1.000
     Entity.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Entity.BorderSizePixel = 0
-    Entity.Size = UDim2.new(1, 0, 0, 35)
+    Entity.Size = UDim2.new(1, 0, 0, 23)
     
     ImageButton_2.Parent = Entity
     ImageButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -188,7 +188,7 @@ function Library:Create(config)
     ImageButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton_2.BorderSizePixel = 0
     ImageButton_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-    ImageButton_2.Size = UDim2.new(0.6, 0, 0.6, 0)
+    ImageButton_2.Size = UDim2.new(0.65, 0, 0.65, 0)
     ImageButton_2.Image = "rbxassetid://13846536185"
     ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
     
@@ -198,7 +198,7 @@ function Library:Create(config)
     Power.BackgroundTransparency = 1.000
     Power.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Power.BorderSizePixel = 0
-    Power.Size = UDim2.new(1, 0, 0, 35)
+    Power.Size = UDim2.new(1, 0, 0, 23)
     
     ImageButton_3.Parent = Power
     ImageButton_3.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -207,7 +207,7 @@ function Library:Create(config)
     ImageButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton_3.BorderSizePixel = 0
     ImageButton_3.Position = UDim2.new(0.5, 0, 0.5, 0)
-    ImageButton_3.Size = UDim2.new(0.6, 0, 0.6, 0)
+    ImageButton_3.Size = UDim2.new(0.65, 0, 0.65, 0)
     ImageButton_3.Image = "rbxassetid://13858683772"
     ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
     
@@ -286,6 +286,11 @@ function Library:Create(config)
     local function update(input)
         local delta = input.Position - dragStart
         main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        
+        -- Update OpenMenu position to follow main
+        local mainPos = main.AbsolutePosition
+        local mainSize = main.AbsoluteSize
+        OpenMenu.Position = UDim2.new(0, mainPos.X + mainSize.X + 8, 0, mainPos.Y + 8)
     end
     
     Top.InputBegan:Connect(function(input)
@@ -321,15 +326,15 @@ function Library:Create(config)
         
         if menuOpen then
             OpenMenu.Visible = true
-            TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 50, 0, 75)
+            TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Size = UDim2.new(0, 45, 0, 50)
             }):Play()
         else
-            TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 0, 0, 75)
+            TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Size = UDim2.new(0, 0, 0, 50)
             }):Play()
             
-            task.wait(0.3)
+            task.wait(0.25)
             OpenMenu.Visible = false
         end
     end)
@@ -341,15 +346,55 @@ function Library:Create(config)
         currentTab = tabName
         
         if tabName == "Entity" then
+            -- Fade out PowerManager
+            if PowerManager.Visible then
+                TweenService:Create(PowerManager, TweenInfo.new(0.15), {
+                    GroupTransparency = 1
+                }):Play()
+                task.wait(0.15)
+                PowerManager.Visible = false
+                PowerManager.GroupTransparency = 0
+            end
+            
+            -- Fade in EntityManager
+            EntityManager.GroupTransparency = 1
             EntityManager.Visible = true
-            PowerManager.Visible = false
+            TweenService:Create(EntityManager, TweenInfo.new(0.15), {
+                GroupTransparency = 0
+            }):Play()
+            
             ImageButton_2.ImageColor3 = Color3.fromRGB(100, 150, 255)
             ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
         elseif tabName == "Power" then
-            EntityManager.Visible = false
+            -- Fade out EntityManager
+            if EntityManager.Visible then
+                TweenService:Create(EntityManager, TweenInfo.new(0.15), {
+                    GroupTransparency = 1
+                }):Play()
+                task.wait(0.15)
+                EntityManager.Visible = false
+                EntityManager.GroupTransparency = 0
+            end
+            
+            -- Fade in PowerManager
+            PowerManager.GroupTransparency = 1
             PowerManager.Visible = true
+            TweenService:Create(PowerManager, TweenInfo.new(0.15), {
+                GroupTransparency = 0
+            }):Play()
+            
             ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
             ImageButton_3.ImageColor3 = Color3.fromRGB(100, 150, 255)
+        end
+        
+        -- Close menu after switching
+        if menuOpen then
+            menuOpen = false
+            TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Size = UDim2.new(0, 0, 0, 50)
+            }):Play()
+            task.wait(0.25)
+            OpenMenu.Visible = false
         end
     end
     
