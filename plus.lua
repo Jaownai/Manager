@@ -208,7 +208,7 @@ function Library:Create(config)
     ImageButton_3.BorderSizePixel = 0
     ImageButton_3.Position = UDim2.new(0.5, 0, 0.5, 0)
     ImageButton_3.Size = UDim2.new(0.6, 0, 0.6, 0)
-    ImageButton_3.Image = "rbxassetid://13858682222"
+    ImageButton_3.Image = "rbxassetid://13858683772"
     ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
     
     Tab.Name = "Tab"
@@ -217,31 +217,29 @@ function Library:Create(config)
     Tab.BackgroundTransparency = 1.000
     Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Tab.BorderSizePixel = 0
-    Tab.Position = UDim2.new(0, 0, 0, 50)
-    Tab.Size = UDim2.new(1, 0, 1, -50)
-    Tab.Visible = true
+    Tab.Position = UDim2.new(0, 0, 0, 58)
+    Tab.Size = UDim2.new(1, 0, 1, -58)
     
     EntityManager.Name = "EntityManager"
     EntityManager.Parent = Tab
     EntityManager.Active = true
-    EntityManager.AnchorPoint = Vector2.new(0, 0)
     EntityManager.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     EntityManager.BackgroundTransparency = 1.000
     EntityManager.BorderColor3 = Color3.fromRGB(0, 0, 0)
     EntityManager.BorderSizePixel = 0
-    EntityManager.Position = UDim2.new(0, 0, 0, 0)
     EntityManager.Size = UDim2.new(1, 0, 1, 0)
+    EntityManager.BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
     EntityManager.CanvasSize = UDim2.new(0, 0, 0, 0)
     EntityManager.ScrollBarThickness = 4
-    EntityManager.ScrollBarImageColor3 = Color3.fromRGB(186, 186, 186)
-    EntityManager.Visible = true
+    EntityManager.TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
+    EntityManager.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    EntityManager.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)
     
     UIListLayout_3.Parent = EntityManager
     UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout_3.Padding = UDim.new(0, 6)
     
     UIPadding_3.Parent = EntityManager
-    UIPadding_3.PaddingBottom = UDim.new(0, 8)
     UIPadding_3.PaddingLeft = UDim.new(0, 8)
     UIPadding_3.PaddingRight = UDim.new(0, 8)
     UIPadding_3.PaddingTop = UDim.new(0, 8)
@@ -249,61 +247,49 @@ function Library:Create(config)
     PowerManager.Name = "PowerManager"
     PowerManager.Parent = Tab
     PowerManager.Active = true
-    PowerManager.AnchorPoint = Vector2.new(0, 0)
     PowerManager.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     PowerManager.BackgroundTransparency = 1.000
     PowerManager.BorderColor3 = Color3.fromRGB(0, 0, 0)
     PowerManager.BorderSizePixel = 0
-    PowerManager.Position = UDim2.new(0, 0, 0, 0)
     PowerManager.Size = UDim2.new(1, 0, 1, 0)
+    PowerManager.Visible = false
+    PowerManager.BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
     PowerManager.CanvasSize = UDim2.new(0, 0, 0, 0)
     PowerManager.ScrollBarThickness = 4
-    PowerManager.ScrollBarImageColor3 = Color3.fromRGB(186, 186, 186)
-    PowerManager.Visible = false
+    PowerManager.TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
+    PowerManager.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    PowerManager.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)
     
     UIListLayout_4.Parent = PowerManager
     UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout_4.Padding = UDim.new(0, 6)
     
     UIPadding_Power.Parent = PowerManager
-    UIPadding_Power.PaddingBottom = UDim.new(0, 8)
     UIPadding_Power.PaddingLeft = UDim.new(0, 8)
     UIPadding_Power.PaddingRight = UDim.new(0, 8)
     UIPadding_Power.PaddingTop = UDim.new(0, 8)
     
-    -- Variables
-    self.Gui = ManagerPlus
-    self.Main = main
-    self.EntityManager = EntityManager
-    self.PowerManager = PowerManager
-    self.OpenMenu = OpenMenu
-    self.IsMinimized = false
-    self.CurrentTab = "Entity"
-    self.SelectedItems = {}
+    -- Helper Functions
+    local function addButtonHover(button, normalColor, hoverColor)
+        button.MouseEnter:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = hoverColor}):Play()
+        end)
+        
+        button.MouseLeave:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = normalColor}):Play()
+        end)
+    end
     
-    -- Dragging
+    -- Draggable functionality
     local dragging, dragInput, dragStart, startPos
     
     local function update(input)
         local delta = input.Position - dragStart
-        main.Position = UDim2.new(
-            startPos.X.Scale, 
-            startPos.X.Offset + delta.X, 
-            startPos.Y.Scale, 
-            startPos.Y.Offset + delta.Y
-        )
-        
-        -- Update OpenMenu position
-        local mainPos = main.AbsolutePosition
-        local mainSize = main.AbsoluteSize
-        OpenMenu.Position = UDim2.new(
-            0, mainPos.X + mainSize.X + 8,
-            0, mainPos.Y + 8
-        )
+        main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
     
     Top.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
             dragStart = input.Position
             startPos = main.Position
@@ -317,7 +303,7 @@ function Library:Create(config)
     end)
     
     Top.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
             dragInput = input
         end
     end)
@@ -328,51 +314,76 @@ function Library:Create(config)
         end
     end)
     
-    -- Menu Button
+    -- Menu Toggle
     local menuOpen = false
     ImageButton.MouseButton1Click:Connect(function()
         menuOpen = not menuOpen
         
         if menuOpen then
             OpenMenu.Visible = true
-            TweenService:Create(OpenMenu, TweenInfo.new(0.3), {
+            TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 Size = UDim2.new(0, 50, 0, 75)
             }):Play()
         else
-            TweenService:Create(OpenMenu, TweenInfo.new(0.3), {
+            TweenService:Create(OpenMenu, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 Size = UDim2.new(0, 0, 0, 75)
             }):Play()
+            
             task.wait(0.3)
             OpenMenu.Visible = false
         end
     end)
     
     -- Tab Switching
+    local currentTab = "Entity"
+    
+    local function switchTab(tabName)
+        currentTab = tabName
+        
+        if tabName == "Entity" then
+            EntityManager.Visible = true
+            PowerManager.Visible = false
+            ImageButton_2.ImageColor3 = Color3.fromRGB(100, 150, 255)
+            ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
+        elseif tabName == "Power" then
+            EntityManager.Visible = false
+            PowerManager.Visible = true
+            ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
+            ImageButton_3.ImageColor3 = Color3.fromRGB(100, 150, 255)
+        end
+    end
+    
     ImageButton_2.MouseButton1Click:Connect(function()
-        EntityManager.Visible = true
-        PowerManager.Visible = false
-        self.CurrentTab = "Entity"
-        menuOpen = false
-        TweenService:Create(OpenMenu, TweenInfo.new(0.3), {
-            Size = UDim2.new(0, 0, 0, 75)
-        }):Play()
-        task.wait(0.3)
-        OpenMenu.Visible = false
+        switchTab("Entity")
     end)
     
     ImageButton_3.MouseButton1Click:Connect(function()
-        EntityManager.Visible = false
-        PowerManager.Visible = true
-        self.CurrentTab = "Power"
-        menuOpen = false
-        TweenService:Create(OpenMenu, TweenInfo.new(0.3), {
-            Size = UDim2.new(0, 0, 0, 75)
-        }):Play()
-        task.wait(0.3)
-        OpenMenu.Visible = false
+        switchTab("Power")
     end)
     
-    -- Methods
+    -- Button Hover Effects
+    addButtonHover(ImageButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 255, 255))
+    addButtonHover(ImageButton_2, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
+    addButtonHover(ImageButton_3, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
+    
+    -- Initial tab
+    switchTab("Entity")
+    
+    -- Store references
+    self.ManagerPlus = ManagerPlus
+    self.main = main
+    self.Title = Title
+    self.Description = Description
+    self.EntityManager = EntityManager
+    self.PowerManager = PowerManager
+    self.TweenService = TweenService
+    self.CurrentTab = currentTab
+    
+    -- Track selected items
+    self.SelectedItems = {}
+    
+    -- ===== Public Methods =====
+    
     function self:Show()
         main.Visible = true
     end
@@ -381,60 +392,52 @@ function Library:Create(config)
         main.Visible = false
     end
     
-    function self:Toggle()
-        main.Visible = not main.Visible
+    function self:Destroy()
+        ManagerPlus:Destroy()
+    end
+    
+    function self:SetTitle(title)
+        Title.Text = title
+    end
+    
+    function self:SetDescription(desc)
+        Description.Text = desc
+    end
+    
+    function self:GetEntityManager()
+        return EntityManager
+    end
+    
+    function self:GetPowerManager()
+        return PowerManager
     end
     
     function self:GetSelectedItems()
         return self.SelectedItems
     end
     
-    function self:ClearSelection()
-        for _, item in ipairs(self.SelectedItems) do
-            if item.Deselect then
-                item:Deselect()
-            end
-        end
-        self.SelectedItems = {}
-    end
-    
-    -- Helper function for button hover
-    local function addButtonHover(button, normalColor, hoverColor)
-        button.MouseEnter:Connect(function()
-            TweenService:Create(button, TweenInfo.new(0.2), {
-                ImageColor3 = hoverColor
-            }):Play()
-        end)
-        
-        button.MouseLeave:Connect(function()
-            TweenService:Create(button, TweenInfo.new(0.2), {
-                ImageColor3 = normalColor
-            }):Play()
-        end)
-    end
-    
-    -- Priority Movement Function
+    -- ===== Helper: Move Item Priority =====
     local function moveItemPriority(frame, direction)
         local parent = frame.Parent
         local children = parent:GetChildren()
         
-        -- Filter for frames with LayoutOrder
-        local frames = {}
+        -- Filter only Frame items with LayoutOrder
+        local items = {}
         for _, child in ipairs(children) do
-            if child:IsA("Frame") and child:FindFirstChild("TextLabel") then
-                table.insert(frames, child)
+            if child:IsA("Frame") and child.LayoutOrder then
+                table.insert(items, child)
             end
         end
         
-        -- Sort by LayoutOrder
-        table.sort(frames, function(a, b)
+        -- Sort by current LayoutOrder
+        table.sort(items, function(a, b)
             return a.LayoutOrder < b.LayoutOrder
         end)
         
-        -- Find current index
+        -- Find current item index
         local currentIndex = nil
-        for i, f in ipairs(frames) do
-            if f == frame then
+        for i, item in ipairs(items) do
+            if item == frame then
                 currentIndex = i
                 break
             end
@@ -442,118 +445,91 @@ function Library:Create(config)
         
         if not currentIndex then return end
         
-        -- Move up (decrease priority)
-        if direction == "up" and currentIndex > 1 then
-            local temp = frames[currentIndex].LayoutOrder
-            frames[currentIndex].LayoutOrder = frames[currentIndex - 1].LayoutOrder
-            frames[currentIndex - 1].LayoutOrder = temp
-        -- Move down (increase priority)
-        elseif direction == "down" and currentIndex < #frames then
-            local temp = frames[currentIndex].LayoutOrder
-            frames[currentIndex].LayoutOrder = frames[currentIndex + 1].LayoutOrder
-            frames[currentIndex + 1].LayoutOrder = temp
+        -- Calculate target index
+        local targetIndex = currentIndex
+        if direction == "up" then
+            targetIndex = math.max(1, currentIndex - 1)
+        elseif direction == "down" then
+            targetIndex = math.min(#items, currentIndex + 1)
         end
+        
+        -- If no movement needed
+        if targetIndex == currentIndex then return end
+        
+        -- Swap LayoutOrder
+        local temp = items[currentIndex].LayoutOrder
+        items[currentIndex].LayoutOrder = items[targetIndex].LayoutOrder
+        items[targetIndex].LayoutOrder = temp
     end
     
-    -- Add Item (Entity or Power)
-    local function createItem(parent, itemConfig)
-        -- Main Frame
+    -- ===== NEW: Add Item Functions =====
+    
+    function self:AddEntity(itemConfig)
+        return self:CreateItem("Entity", itemConfig)
+    end
+    
+    function self:AddPower(itemConfig)
+        return self:CreateItem("Power", itemConfig)
+    end
+    
+    function self:CreateItem(tab, itemConfig)
+        itemConfig = itemConfig or {}
+        
+        local parent = tab == "Entity" and EntityManager or PowerManager
+        
+        -- Calculate LayoutOrder (add to end)
+        local maxLayoutOrder = 0
+        for _, child in ipairs(parent:GetChildren()) do
+            if child:IsA("Frame") and child.LayoutOrder then
+                maxLayoutOrder = math.max(maxLayoutOrder, child.LayoutOrder)
+            end
+        end
+        
+        -- Create Frame
         local Frame = Instance.new("Frame")
-        Frame.Name = "Item_" .. (itemConfig.Text or "Unknown")
-        Frame.Parent = parent
+        Frame.Name = itemConfig.Text or "Item"
         Frame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
         Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
         Frame.BorderSizePixel = 0
-        Frame.Size = UDim2.new(1, 0, 0, 55)
-        Frame.LayoutOrder = itemConfig.Priority or 999
+        Frame.Size = UDim2.new(1, -4, 0, 60)
+        Frame.LayoutOrder = maxLayoutOrder + 1
+        Frame.Parent = parent
+        
+        local FrameStroke = Instance.new("UIStroke")
+        FrameStroke.Parent = Frame
+        FrameStroke.Color = Color3.fromRGB(50, 50, 50)
+        FrameStroke.Thickness = 1
         
         local FrameCorner = Instance.new("UICorner")
         FrameCorner.CornerRadius = UDim.new(0, 6)
         FrameCorner.Parent = Frame
         
-        local FrameStroke = Instance.new("UIStroke")
-        FrameStroke.Parent = Frame
-        FrameStroke.Color = Color3.fromRGB(50, 50, 50)
-        FrameStroke.Thickness = 1.2
-        
-        -- Selection Indicator (Checkbox)
-        local SelectionIndicator = Instance.new("Frame")
-        SelectionIndicator.Name = "SelectionIndicator"
-        SelectionIndicator.Parent = Frame
-        SelectionIndicator.AnchorPoint = Vector2.new(0, 0.5)
-        SelectionIndicator.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-        SelectionIndicator.BorderSizePixel = 0
-        SelectionIndicator.Position = UDim2.new(0, 10, 0.5, 0)
-        SelectionIndicator.Size = UDim2.new(0, 20, 0, 20)
-        SelectionIndicator.Visible = false
-        
-        local SelectionCorner = Instance.new("UICorner")
-        SelectionCorner.CornerRadius = UDim.new(0, 4)
-        SelectionCorner.Parent = SelectionIndicator
-        
-        local SelectionStroke = Instance.new("UIStroke")
-        SelectionStroke.Parent = SelectionIndicator
-        SelectionStroke.Color = Color3.fromRGB(150, 200, 255)
-        SelectionStroke.Thickness = 2
-        
-        -- Checkmark Icon
-        local Checkmark = Instance.new("ImageLabel")
-        Checkmark.Name = "Checkmark"
-        Checkmark.Parent = SelectionIndicator
-        Checkmark.AnchorPoint = Vector2.new(0.5, 0.5)
-        Checkmark.BackgroundTransparency = 1
-        Checkmark.Position = UDim2.new(0.5, 0, 0.5, 0)
-        Checkmark.Size = UDim2.new(0.7, 0, 0.7, 0)
-        Checkmark.Image = "rbxassetid://13840669701"
-        Checkmark.ImageColor3 = Color3.fromRGB(255, 255, 255)
-        
-        -- Text Label
-        local TextLabel = Instance.new("TextButton")
-        TextLabel.Name = "TextLabel"
-        TextLabel.Parent = Frame
-        TextLabel.AnchorPoint = Vector2.new(0, 0.5)
-        TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        TextLabel.BackgroundTransparency = 1.000
-        TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        TextLabel.BorderSizePixel = 0
-        TextLabel.Position = UDim2.new(0, 40, 0.35, 0)
-        TextLabel.Size = UDim2.new(0.55, 0, 0, 18)
-        TextLabel.Font = Enum.Font.GothamBold
-        TextLabel.Text = itemConfig.Text or "Item"
-        TextLabel.TextColor3 = Color3.fromRGB(230, 230, 230)
-        TextLabel.TextSize = 15
-        TextLabel.TextWrapped = false
-        TextLabel.TextXAlignment = Enum.TextXAlignment.Left
-        
-        local TextPadding = Instance.new("UIPadding")
-        TextPadding.Parent = TextLabel
-        TextPadding.PaddingLeft = UDim.new(0, 4)
-        
-        -- Priority Buttons Frame (ขวา)
-        local ButtonFrame = Instance.new("Frame")
-        ButtonFrame.Name = "ButtonFrame"
-        ButtonFrame.Parent = Frame
-        ButtonFrame.AnchorPoint = Vector2.new(1, 0.5)
-        ButtonFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ButtonFrame.BackgroundTransparency = 1.000
-        ButtonFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        ButtonFrame.BorderSizePixel = 0
-        ButtonFrame.Position = UDim2.new(1, -8, 0.5, 0)
-        ButtonFrame.Size = UDim2.new(0, 35, 1, 0)
+        -- ===== Priority Buttons (Right Side) =====
+        local PriorityFrame = Instance.new("Frame")
+        PriorityFrame.Name = "PriorityFrame"
+        PriorityFrame.Parent = Frame
+        PriorityFrame.AnchorPoint = Vector2.new(1, 0.5)
+        PriorityFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        PriorityFrame.BackgroundTransparency = 1.000
+        PriorityFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        PriorityFrame.BorderSizePixel = 0
+        PriorityFrame.Position = UDim2.new(1, -8, 0.5, 0)
+        PriorityFrame.Size = UDim2.new(0, 35, 1, 0)
         
         -- Up Button
         local UpButton = Instance.new("TextButton")
         UpButton.Name = "UpButton"
-        UpButton.Parent = ButtonFrame
-        UpButton.AnchorPoint = Vector2.new(0.5, 0.5)
+        UpButton.Parent = PriorityFrame
+        UpButton.AnchorPoint = Vector2.new(0.5, 0)
         UpButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        UpButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
         UpButton.BorderSizePixel = 0
-        UpButton.Position = UDim2.new(0.5, 0, 0.3, 0)
-        UpButton.Size = UDim2.new(0.8, 0, 0.35, 0)
+        UpButton.Position = UDim2.new(0.5, 0, 0.1, 0)
+        UpButton.Size = UDim2.new(1, 0, 0, 20)
         UpButton.Font = Enum.Font.GothamBold
         UpButton.Text = "▲"
         UpButton.TextColor3 = Color3.fromRGB(186, 186, 186)
-        UpButton.TextSize = 12
+        UpButton.TextSize = 10
         
         local UpCorner = Instance.new("UICorner")
         UpCorner.CornerRadius = UDim.new(0, 4)
@@ -562,20 +538,58 @@ function Library:Create(config)
         -- Down Button
         local DownButton = Instance.new("TextButton")
         DownButton.Name = "DownButton"
-        DownButton.Parent = ButtonFrame
-        DownButton.AnchorPoint = Vector2.new(0.5, 0.5)
+        DownButton.Parent = PriorityFrame
+        DownButton.AnchorPoint = Vector2.new(0.5, 1)
         DownButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        DownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
         DownButton.BorderSizePixel = 0
-        DownButton.Position = UDim2.new(0.5, 0, 0.7, 0)
-        DownButton.Size = UDim2.new(0.8, 0, 0.35, 0)
+        DownButton.Position = UDim2.new(0.5, 0, 0.9, 0)
+        DownButton.Size = UDim2.new(1, 0, 0, 20)
         DownButton.Font = Enum.Font.GothamBold
         DownButton.Text = "▼"
         DownButton.TextColor3 = Color3.fromRGB(186, 186, 186)
-        DownButton.TextSize = 12
+        DownButton.TextSize = 10
         
         local DownCorner = Instance.new("UICorner")
         DownCorner.CornerRadius = UDim.new(0, 4)
         DownCorner.Parent = DownButton
+        
+        -- ===== Selection Indicator =====
+        local SelectionIndicator = Instance.new("Frame")
+        SelectionIndicator.Name = "SelectionIndicator"
+        SelectionIndicator.Parent = Frame
+        SelectionIndicator.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+        SelectionIndicator.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        SelectionIndicator.BorderSizePixel = 0
+        SelectionIndicator.Position = UDim2.new(0, 0, 0, 0)
+        SelectionIndicator.Size = UDim2.new(0, 3, 1, 0)
+        SelectionIndicator.Visible = false
+        
+        local IndicatorCorner = Instance.new("UICorner")
+        IndicatorCorner.CornerRadius = UDim.new(0, 6)
+        IndicatorCorner.Parent = SelectionIndicator
+        
+        -- Text Label (Clickable for Selection)
+        local TextLabel = Instance.new("TextButton")
+        TextLabel.Name = "TextLabel"
+        TextLabel.Parent = Frame
+        TextLabel.AnchorPoint = Vector2.new(0, 0.5)
+        TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        TextLabel.BackgroundTransparency = 1.000
+        TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        TextLabel.BorderSizePixel = 0
+        TextLabel.Position = UDim2.new(0, 12, 0.35, 0)
+        TextLabel.Size = UDim2.new(0.55, 0, 0, 18)
+        TextLabel.Font = Enum.Font.GothamBold
+        TextLabel.Text = itemConfig.Text or "Item Name"
+        TextLabel.TextColor3 = Color3.fromRGB(226, 226, 226)
+        TextLabel.TextSize = 15
+        TextLabel.TextWrapped = false
+        TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+        
+        local TextPadding = Instance.new("UIPadding")
+        TextPadding.Parent = TextLabel
+        TextPadding.PaddingLeft = UDim.new(0, 4)
         
         -- Description Label
         local DescLabel = Instance.new("TextButton")
@@ -586,7 +600,7 @@ function Library:Create(config)
         DescLabel.BackgroundTransparency = 1.000
         DescLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
         DescLabel.BorderSizePixel = 0
-        DescLabel.Position = UDim2.new(0, 40, 0.65, 0)
+        DescLabel.Position = UDim2.new(0, 12, 0.65, 0)
         DescLabel.Size = UDim2.new(0.55, 0, 0, 14)
         DescLabel.Font = Enum.Font.Gotham
         DescLabel.Text = itemConfig.Description or "No Description"
@@ -736,32 +750,6 @@ function Library:Create(config)
         end
         
         return itemObject
-    end
-    
-    -- Add Entity
-    function self:AddEntity(config)
-        local item = createItem(EntityManager, config)
-        
-        -- Auto-resize canvas
-        EntityManager.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_3.AbsoluteContentSize.Y + 16)
-        UIListLayout_3:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-            EntityManager.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_3.AbsoluteContentSize.Y + 16)
-        end)
-        
-        return item
-    end
-    
-    -- Add Power
-    function self:AddPower(config)
-        local item = createItem(PowerManager, config)
-        
-        -- Auto-resize canvas
-        PowerManager.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_4.AbsoluteContentSize.Y + 16)
-        UIListLayout_4:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-            PowerManager.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_4.AbsoluteContentSize.Y + 16)
-        end)
-        
-        return item
     end
     
     return self
