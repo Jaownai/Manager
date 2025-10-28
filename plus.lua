@@ -20,6 +20,7 @@ function Library:Create(config)
     local Description = Instance.new("TextLabel")
     local Menu = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
+    local UIGradient = Instance.new("UIGradient")
     local ImageButton = Instance.new("ImageButton")
     local UICorner_3 = Instance.new("UICorner")
     local UICorner_4 = Instance.new("UICorner")
@@ -415,6 +416,52 @@ function Library:Create(config)
         return self.SelectedItems
     end
     
+    -- ===== Helper: Move Item Priority =====
+    local function moveItemPriority(frame, direction)
+        local parent = frame.Parent
+        local children = parent:GetChildren()
+        
+        -- Filter only Frame items with LayoutOrder
+        local items = {}
+        for _, child in ipairs(children) do
+            if child:IsA("Frame") and child.LayoutOrder then
+                table.insert(items, child)
+            end
+        end
+        
+        -- Sort by current LayoutOrder
+        table.sort(items, function(a, b)
+            return a.LayoutOrder < b.LayoutOrder
+        end)
+        
+        -- Find current item index
+        local currentIndex = nil
+        for i, item in ipairs(items) do
+            if item == frame then
+                currentIndex = i
+                break
+            end
+        end
+        
+        if not currentIndex then return end
+        
+        -- Calculate target index
+        local targetIndex = currentIndex
+        if direction == "up" then
+            targetIndex = math.max(1, currentIndex - 1)
+        elseif direction == "down" then
+            targetIndex = math.min(#items, currentIndex + 1)
+        end
+        
+        -- If no movement needed
+        if targetIndex == currentIndex then return end
+        
+        -- Swap LayoutOrder
+        local temp = items[currentIndex].LayoutOrder
+        items[currentIndex].LayoutOrder = items[targetIndex].LayoutOrder
+        items[targetIndex].LayoutOrder = temp
+    end
+    
     -- ===== NEW: Add Item Functions =====
     
     function self:AddEntity(itemConfig)
@@ -471,6 +518,56 @@ function Library:Create(config)
         local IndicatorCorner = Instance.new("UICorner")
         IndicatorCorner.CornerRadius = UDim.new(0, 6)
         IndicatorCorner.Parent = SelectionIndicator
+        
+        -- ===== Priority Buttons (Left Side) =====
+        local PriorityFrame = Instance.new("Frame")
+        PriorityFrame.Name = "PriorityFrame"
+        PriorityFrame.Parent = Frame
+        PriorityFrame.AnchorPoint = Vector2.new(0, 0.5)
+        PriorityFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        PriorityFrame.BackgroundTransparency = 1.000
+        PriorityFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        PriorityFrame.BorderSizePixel = 0
+        PriorityFrame.Position = UDim2.new(0, 8, 0.5, 0)
+        PriorityFrame.Size = UDim2.new(0, 25, 1, 0)
+        
+        -- Up Button
+        local UpButton = Instance.new("TextButton")
+        UpButton.Name = "UpButton"
+        UpButton.Parent = PriorityFrame
+        UpButton.AnchorPoint = Vector2.new(0.5, 0)
+        UpButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        UpButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        UpButton.BorderSizePixel = 0
+        UpButton.Position = UDim2.new(0.5, 0, 0.1, 0)
+        UpButton.Size = UDim2.new(1, 0, 0, 20)
+        UpButton.Font = Enum.Font.GothamBold
+        UpButton.Text = "▲"
+        UpButton.TextColor3 = Color3.fromRGB(186, 186, 186)
+        UpButton.TextSize = 10
+        
+        local UpCorner = Instance.new("UICorner")
+        UpCorner.CornerRadius = UDim.new(0, 4)
+        UpCorner.Parent = UpButton
+        
+        -- Down Button
+        local DownButton = Instance.new("TextButton")
+        DownButton.Name = "DownButton"
+        DownButton.Parent = PriorityFrame
+        DownButton.AnchorPoint = Vector2.new(0.5, 1)
+        DownButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        DownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        DownButton.BorderSizePixel = 0
+        DownButton.Position = UDim2.new(0.5, 0, 0.9, 0)
+        DownButton.Size = UDim2.new(1, 0, 0, 20)
+        DownButton.Font = Enum.Font.GothamBold
+        DownButton.Text = "▼"
+        DownButton.TextColor3 = Color3.fromRGB(186, 186, 186)
+        DownButton.TextSize = 10
+        
+        local DownCorner = Instance.new("UICorner")
+        DownCorner.CornerRadius = UDim.new(0, 4)
+        DownCorner.Parent = DownButton
         
         -- Text Label (Clickable for Selection)
         local TextLabel = Instance.new("TextButton")
