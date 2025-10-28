@@ -612,6 +612,7 @@ function Library:Create(config)
         end)
         
         -- ===== Item Methods =====
+        function itemObject:UpdateText(text)
             TextLabel.Text = text
         end
         
