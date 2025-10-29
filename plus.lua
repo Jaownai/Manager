@@ -188,7 +188,7 @@ function Library:Create(config)
     ImageButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton_2.BorderSizePixel = 0
     ImageButton_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-    ImageButton_2.Size = UDim2.new(0.65, 0, 0.65, 0)
+    ImageButton_2.Size = UDim2.new(0.55, 0, 0.55, 0)
     ImageButton_2.Image = "rbxassetid://13846536185"
     ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
     
@@ -207,7 +207,7 @@ function Library:Create(config)
     ImageButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton_3.BorderSizePixel = 0
     ImageButton_3.Position = UDim2.new(0.5, 0, 0.5, 0)
-    ImageButton_3.Size = UDim2.new(0.65, 0, 0.65, 0)
+    ImageButton_3.Size = UDim2.new(0.55, 0, 0.55, 0)
     ImageButton_3.Image = "rbxassetid://13858683772"
     ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
     
@@ -327,7 +327,7 @@ function Library:Create(config)
         if menuOpen then
             OpenMenu.Visible = true
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 10, 0, 70)
+                Size = UDim2.new(0, 38, 0, 70)
             }):Play()
         else
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
@@ -341,35 +341,64 @@ function Library:Create(config)
     
     -- Tab Switching
     local currentTab = "Entity"
+    local switching = false
     
     local function switchTab(tabName)
+        if switching or currentTab == tabName then return end
+        switching = true
         currentTab = tabName
         
         if tabName == "Entity" then
-            -- Switch to EntityManager
-            PowerManager.Visible = false
+            -- Slide animation
+            if PowerManager.Visible then
+                -- Slide out PowerManager to right
+                local startPos = PowerManager.Position
+                TweenService:Create(PowerManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                    Position = UDim2.new(1.5, 0, startPos.Y.Scale, startPos.Y.Offset)
+                }):Play()
+                
+                task.wait(0.2)
+                PowerManager.Visible = false
+                PowerManager.Position = startPos
+            end
+            
+            -- Slide in EntityManager from left
+            EntityManager.Position = UDim2.new(-0.5, 0, 0.519057035, 0)
             EntityManager.Visible = true
+            TweenService:Create(EntityManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                Position = UDim2.new(0.5, 0, 0.519057035, 0)
+            }):Play()
             
             ImageButton_2.ImageColor3 = Color3.fromRGB(100, 150, 255)
             ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
+            
         elseif tabName == "Power" then
-            -- Switch to PowerManager
-            EntityManager.Visible = false
+            -- Slide animation
+            if EntityManager.Visible then
+                -- Slide out EntityManager to left
+                local startPos = EntityManager.Position
+                TweenService:Create(EntityManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                    Position = UDim2.new(-0.5, 0, startPos.Y.Scale, startPos.Y.Offset)
+                }):Play()
+                
+                task.wait(0.2)
+                EntityManager.Visible = false
+                EntityManager.Position = startPos
+            end
+            
+            -- Slide in PowerManager from right
+            PowerManager.Position = UDim2.new(1.5, 0, 0.519057035, 0)
             PowerManager.Visible = true
+            TweenService:Create(PowerManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                Position = UDim2.new(0.5, 0, 0.519057035, 0)
+            }):Play()
             
             ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
             ImageButton_3.ImageColor3 = Color3.fromRGB(100, 150, 255)
         end
         
-        -- Close menu after switching
-        if menuOpen then
-            menuOpen = false
-            TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 0, 0, 70)
-            }):Play()
-            task.wait(0.25)
-            OpenMenu.Visible = false
-        end
+        task.wait(0.2)
+        switching = false
     end
     
     ImageButton_2.MouseButton1Click:Connect(function()
