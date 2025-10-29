@@ -327,7 +327,7 @@ function Library:Create(config)
         if menuOpen then
             OpenMenu.Visible = true
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 25, 0, 70)
+                Size = UDim2.new(0, 10, 0, 70)
             }):Play()
         else
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
