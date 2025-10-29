@@ -145,9 +145,12 @@ function Library:Create(config)
     ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
     ImageButton.BorderSizePixel = 0
     ImageButton.Position = UDim2.new(0.5, 0, 0.5, 0)
-    ImageButton.Size = UDim2.new(0.7, 0, 0.7, 0)
-    ImageButton.Image = "rbxassetid://13851089579"
-    ImageButton.ImageColor3 = Color3.fromRGB(186, 186, 186)
+    ImageButton.Size = UDim2.new(1, 0, 1, 0)
+    ImageButton.Font = Enum.Font.GothamBold
+    ImageButton.Text = "☰"
+    ImageButton.TextColor3 = Color3.fromRGB(186, 186, 186)
+    ImageButton.TextSize = 20
+    ImageButton.Image = ""
     
     OpenMenu.Name = "Open-Menu"
     OpenMenu.Parent = Canvas
@@ -272,11 +275,19 @@ function Library:Create(config)
     -- Helper Functions
     local function addButtonHover(button, normalColor, hoverColor)
         button.MouseEnter:Connect(function()
-            TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = hoverColor}):Play()
+            if button:IsA("ImageButton") and button.Image ~= "" then
+                TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = hoverColor}):Play()
+            elseif button:IsA("TextButton") or (button:IsA("ImageButton") and button.Image == "") then
+                TweenService:Create(button, TweenInfo.new(0.2), {TextColor3 = hoverColor}):Play()
+            end
         end)
         
         button.MouseLeave:Connect(function()
-            TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = normalColor}):Play()
+            if button:IsA("ImageButton") and button.Image ~= "" then
+                TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = normalColor}):Play()
+            elseif button:IsA("TextButton") or (button:IsA("ImageButton") and button.Image == "") then
+                TweenService:Create(button, TweenInfo.new(0.2), {TextColor3 = normalColor}):Play()
+            end
         end)
     end
     
