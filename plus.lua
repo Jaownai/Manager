@@ -341,64 +341,35 @@ function Library:Create(config)
     
     -- Tab Switching
     local currentTab = "Entity"
-    local switching = false
     
     local function switchTab(tabName)
-        if switching or currentTab == tabName then return end
-        switching = true
+        if currentTab == tabName then return end
         currentTab = tabName
         
         if tabName == "Entity" then
-            -- Slide animation
-            if PowerManager.Visible then
-                -- Slide out PowerManager to right
-                local startPos = PowerManager.Position
-                TweenService:Create(PowerManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
-                    Position = UDim2.new(1.5, 0, startPos.Y.Scale, startPos.Y.Offset)
-                }):Play()
-                
-                task.wait(0.2)
-                PowerManager.Visible = false
-                PowerManager.Position = startPos
-            end
-            
-            -- Slide in EntityManager from left
-            EntityManager.Position = UDim2.new(-0.5, 0, 0.519057035, 0)
+            -- Switch to EntityManager
+            PowerManager.Visible = false
             EntityManager.Visible = true
-            TweenService:Create(EntityManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
-                Position = UDim2.new(0.5, 0, 0.519057035, 0)
-            }):Play()
+            
+            -- Update Title and Description
+            Title.Text = "Entity Manager [ Premium ]"
+            Description.Text = "Manage your entities here"
             
             ImageButton_2.ImageColor3 = Color3.fromRGB(100, 150, 255)
             ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
             
         elseif tabName == "Power" then
-            -- Slide animation
-            if EntityManager.Visible then
-                -- Slide out EntityManager to left
-                local startPos = EntityManager.Position
-                TweenService:Create(EntityManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
-                    Position = UDim2.new(-0.5, 0, startPos.Y.Scale, startPos.Y.Offset)
-                }):Play()
-                
-                task.wait(0.2)
-                EntityManager.Visible = false
-                EntityManager.Position = startPos
-            end
-            
-            -- Slide in PowerManager from right
-            PowerManager.Position = UDim2.new(1.5, 0, 0.519057035, 0)
+            -- Switch to PowerManager
+            EntityManager.Visible = false
             PowerManager.Visible = true
-            TweenService:Create(PowerManager, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
-                Position = UDim2.new(0.5, 0, 0.519057035, 0)
-            }):Play()
+            
+            -- Update Title and Description
+            Title.Text = "Power Manager [ Premium ]"
+            Description.Text = "Manage your powers here"
             
             ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
             ImageButton_3.ImageColor3 = Color3.fromRGB(100, 150, 255)
         end
-        
-        task.wait(0.2)
-        switching = false
     end
     
     ImageButton_2.MouseButton1Click:Connect(function()
@@ -661,6 +632,46 @@ function Library:Create(config)
         DescPadding.Parent = DescLabel
         DescPadding.PaddingLeft = UDim.new(0, 4)
         
+        -- ===== Icon Frame (for Power items) =====
+        local IconFrame = nil
+        local IconImage = nil
+        
+        if itemConfig.Icon then
+            IconFrame = Instance.new("Frame")
+            IconFrame.Name = "IconFrame"
+            IconFrame.Parent = Frame
+            IconFrame.AnchorPoint = Vector2.new(1, 0.5)
+            IconFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            IconFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+            IconFrame.BorderSizePixel = 0
+            IconFrame.Position = UDim2.new(1, -50, 0.5, 0)
+            IconFrame.Size = UDim2.new(0, 35, 0, 45)
+            
+            local IconCorner = Instance.new("UICorner")
+            IconCorner.CornerRadius = UDim.new(0, 6)
+            IconCorner.Parent = IconFrame
+            
+            local IconGradient = Instance.new("UIGradient")
+            IconGradient.Color = ColorSequence.new{
+                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(24, 24, 24)),
+                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 45, 45))
+            }
+            IconGradient.Rotation = -33
+            IconGradient.Parent = IconFrame
+            
+            IconImage = Instance.new("ImageLabel")
+            IconImage.Name = "IconImage"
+            IconImage.Parent = IconFrame
+            IconImage.AnchorPoint = Vector2.new(0.5, 0.5)
+            IconImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            IconImage.BackgroundTransparency = 1.000
+            IconImage.BorderSizePixel = 0
+            IconImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+            IconImage.Size = UDim2.new(0.85, 0, 0.85, 0)
+            IconImage.Image = itemConfig.Icon
+            IconImage.ScaleType = Enum.ScaleType.Fit
+        end
+        
         -- ===== Item Object =====
         local itemObject = {
             Frame = Frame,
@@ -669,6 +680,8 @@ function Library:Create(config)
             UpButton = UpButton,
             DownButton = DownButton,
             SelectionIndicator = SelectionIndicator,
+            IconFrame = IconFrame,
+            IconImage = IconImage,
             IsSelected = false
         }
         
@@ -763,6 +776,12 @@ function Library:Create(config)
         
         function itemObject:UpdateDescription(desc)
             DescLabel.Text = desc
+        end
+        
+        function itemObject:UpdateIcon(iconId)
+            if IconImage then
+                IconImage.Image = iconId
+            end
         end
         
         function itemObject:Remove()
