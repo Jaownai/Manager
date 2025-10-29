@@ -21,7 +21,7 @@ function Library:Create(config)
     local Menu = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
     local UIGradient = Instance.new("UIGradient")
-    local ImageButton = Instance.new("ImageButton")
+    local MenuButton = Instance.new("TextButton")
     local UICorner_3 = Instance.new("UICorner")
     local UICorner_4 = Instance.new("UICorner")
     local Tab = Instance.new("Frame")
@@ -138,19 +138,18 @@ function Library:Create(config)
     UIGradient.Rotation = -33
     UIGradient.Parent = Menu
     
-    ImageButton.Parent = Menu
-    ImageButton.AnchorPoint = Vector2.new(0.5, 0.5)
-    ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ImageButton.BackgroundTransparency = 1.000
-    ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    ImageButton.BorderSizePixel = 0
-    ImageButton.Position = UDim2.new(0.5, 0, 0.5, 0)
-    ImageButton.Size = UDim2.new(1, 0, 1, 0)
-    ImageButton.Font = Enum.Font.GothamBold
-    ImageButton.Text = "☰"
-    ImageButton.TextColor3 = Color3.fromRGB(186, 186, 186)
-    ImageButton.TextSize = 20
-    ImageButton.Image = ""
+    MenuButton.Parent = Menu
+    MenuButton.AnchorPoint = Vector2.new(0.5, 0.5)
+    MenuButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    MenuButton.BackgroundTransparency = 1.000
+    MenuButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    MenuButton.BorderSizePixel = 0
+    MenuButton.Position = UDim2.new(0.5, 0, 0.5, 0)
+    MenuButton.Size = UDim2.new(1, 0, 1, 0)
+    MenuButton.Font = Enum.Font.GothamBold
+    MenuButton.Text = "☰"
+    MenuButton.TextColor3 = Color3.fromRGB(186, 186, 186)
+    MenuButton.TextSize = 20
     
     OpenMenu.Name = "Open-Menu"
     OpenMenu.Parent = Canvas
@@ -275,18 +274,18 @@ function Library:Create(config)
     -- Helper Functions
     local function addButtonHover(button, normalColor, hoverColor)
         button.MouseEnter:Connect(function()
-            if button:IsA("ImageButton") and button.Image ~= "" then
-                TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = hoverColor}):Play()
-            elseif button:IsA("TextButton") or (button:IsA("ImageButton") and button.Image == "") then
+            if button:IsA("TextButton") then
                 TweenService:Create(button, TweenInfo.new(0.2), {TextColor3 = hoverColor}):Play()
+            elseif button:IsA("ImageButton") then
+                TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = hoverColor}):Play()
             end
         end)
         
         button.MouseLeave:Connect(function()
-            if button:IsA("ImageButton") and button.Image ~= "" then
-                TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = normalColor}):Play()
-            elseif button:IsA("TextButton") or (button:IsA("ImageButton") and button.Image == "") then
+            if button:IsA("TextButton") then
                 TweenService:Create(button, TweenInfo.new(0.2), {TextColor3 = normalColor}):Play()
+            elseif button:IsA("ImageButton") then
+                TweenService:Create(button, TweenInfo.new(0.2), {ImageColor3 = normalColor}):Play()
             end
         end)
     end
@@ -332,7 +331,7 @@ function Library:Create(config)
     
     -- Menu Toggle
     local menuOpen = false
-    ImageButton.MouseButton1Click:Connect(function()
+    MenuButton.MouseButton1Click:Connect(function()
         menuOpen = not menuOpen
         
         if menuOpen then
@@ -392,7 +391,7 @@ function Library:Create(config)
     end)
     
     -- Button Hover Effects
-    addButtonHover(ImageButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 255, 255))
+    addButtonHover(MenuButton, Color3.fromRGB(186, 186, 186), Color3.fromRGB(255, 255, 255))
     addButtonHover(ImageButton_2, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
     addButtonHover(ImageButton_3, Color3.fromRGB(186, 186, 186), Color3.fromRGB(100, 150, 255))
     
