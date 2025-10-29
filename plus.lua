@@ -156,7 +156,7 @@ function Library:Create(config)
     OpenMenu.BorderColor3 = Color3.fromRGB(0, 0, 0)
     OpenMenu.BorderSizePixel = 0
     OpenMenu.Position = UDim2.new(0.5, 550/2 + 8, 0.5, -350/2 + 8)
-    OpenMenu.Size = UDim2.new(0, 0, 0, 50)
+    OpenMenu.Size = UDim2.new(0, 0, 0, 70)
     OpenMenu.Visible = false
     OpenMenu.ClipsDescendants = true
     OpenMenu.ZIndex = 10000
@@ -170,7 +170,7 @@ function Library:Create(config)
     
     UIListLayout_2.Parent = OpenMenu
     UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-    UIListLayout_2.Padding = UDim.new(0, 1)
+    UIListLayout_2.Padding = UDim.new(0, 3)
     UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
     
     Entity.Name = "Entity"
@@ -179,7 +179,7 @@ function Library:Create(config)
     Entity.BackgroundTransparency = 1.000
     Entity.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Entity.BorderSizePixel = 0
-    Entity.Size = UDim2.new(1, 0, 0, 23)
+    Entity.Size = UDim2.new(1, 0, 0, 33)
     
     ImageButton_2.Parent = Entity
     ImageButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -198,7 +198,7 @@ function Library:Create(config)
     Power.BackgroundTransparency = 1.000
     Power.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Power.BorderSizePixel = 0
-    Power.Size = UDim2.new(1, 0, 0, 23)
+    Power.Size = UDim2.new(1, 0, 0, 33)
     
     ImageButton_3.Parent = Power
     ImageButton_3.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -327,11 +327,11 @@ function Library:Create(config)
         if menuOpen then
             OpenMenu.Visible = true
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 45, 0, 50)
+                Size = UDim2.new(0, 45, 0, 70)
             }):Play()
         else
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 0, 0, 50)
+                Size = UDim2.new(0, 0, 0, 70)
             }):Play()
             
             task.wait(0.25)
@@ -346,42 +346,16 @@ function Library:Create(config)
         currentTab = tabName
         
         if tabName == "Entity" then
-            -- Fade out PowerManager
-            if PowerManager.Visible then
-                TweenService:Create(PowerManager, TweenInfo.new(0.15), {
-                    GroupTransparency = 1
-                }):Play()
-                task.wait(0.15)
-                PowerManager.Visible = false
-                PowerManager.GroupTransparency = 0
-            end
-            
-            -- Fade in EntityManager
-            EntityManager.GroupTransparency = 1
+            -- Switch to EntityManager
+            PowerManager.Visible = false
             EntityManager.Visible = true
-            TweenService:Create(EntityManager, TweenInfo.new(0.15), {
-                GroupTransparency = 0
-            }):Play()
             
             ImageButton_2.ImageColor3 = Color3.fromRGB(100, 150, 255)
             ImageButton_3.ImageColor3 = Color3.fromRGB(186, 186, 186)
         elseif tabName == "Power" then
-            -- Fade out EntityManager
-            if EntityManager.Visible then
-                TweenService:Create(EntityManager, TweenInfo.new(0.15), {
-                    GroupTransparency = 1
-                }):Play()
-                task.wait(0.15)
-                EntityManager.Visible = false
-                EntityManager.GroupTransparency = 0
-            end
-            
-            -- Fade in PowerManager
-            PowerManager.GroupTransparency = 1
+            -- Switch to PowerManager
+            EntityManager.Visible = false
             PowerManager.Visible = true
-            TweenService:Create(PowerManager, TweenInfo.new(0.15), {
-                GroupTransparency = 0
-            }):Play()
             
             ImageButton_2.ImageColor3 = Color3.fromRGB(186, 186, 186)
             ImageButton_3.ImageColor3 = Color3.fromRGB(100, 150, 255)
@@ -391,7 +365,7 @@ function Library:Create(config)
         if menuOpen then
             menuOpen = false
             TweenService:Create(OpenMenu, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Size = UDim2.new(0, 0, 0, 50)
+                Size = UDim2.new(0, 0, 0, 70)
             }):Play()
             task.wait(0.25)
             OpenMenu.Visible = false
